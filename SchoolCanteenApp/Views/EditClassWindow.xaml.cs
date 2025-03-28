@@ -1,17 +1,8 @@
 ﻿using SchoolCanteenApp.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace SchoolCanteenApp.Views
 {
@@ -20,34 +11,67 @@ namespace SchoolCanteenApp.Views
     /// </summary>
     public partial class EditClassWindow : Window
     {
-        private readonly Class _class;
+        private readonly Class _originalClass;
+        private Class _editableClass;
+        private readonly SchoolCanteenEntities _context;
 
         public EditClassWindow(Class selectedClass)
         {
             InitializeComponent();
-            _class = selectedClass;
-            DataContext = _class;
 
-            using (var context = new SchoolCanteenEntities())
+            _context = new SchoolCanteenEntities();
+            _originalClass = _context.Class
+                .Include(c => c.Teacher) // Исправлено: убрана лишняя скобка
+                .FirstOrDefault(c => c.IdClass == selectedClass.IdClass);
+
+            if (_originalClass == null)
             {
-                TeacherComboBox.ItemsSource = context.Teacher.ToList();
-                TeacherComboBox.SelectedValue = _class.IdTeacher;
+                MessageBox.Show("Класс не найден");
+                Close();
+                return;
             }
+
+            // Создаем копию для редактирования
+            _editableClass = new Class
+            {
+                IdClass = _originalClass.IdClass,
+                Class1 = _originalClass.Class1,
+                IdTeacher = _originalClass.IdTeacher
+            };
+
+            // Загрузка учителей
+            TeacherComboBox.ItemsSource = _context.Teacher.ToList();
+            TeacherComboBox.SelectedValue = _editableClass.IdTeacher;
+
+            DataContext = _editableClass;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new SchoolCanteenEntities())
+            var result = MessageBox.Show("Сохранить изменения?", "Подтверждение",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
             {
-                var classToUpdate = context.Class.Find(_class.IdClass);
-                if (classToUpdate != null)
+                try
                 {
-                    classToUpdate.Class1 = _class.Class1;
-                    classToUpdate.IdTeacher = _class.IdTeacher;
-                    context.SaveChanges();
+                    // Обновляем оригинальный объект
+                    _originalClass.Class1 = _editableClass.Class1;
+                    _originalClass.IdTeacher = _editableClass.IdTeacher;
+
+                    _context.SaveChanges();
+                    DialogResult = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+                    DialogResult = false;
                 }
             }
-            DialogResult = true;
+            else
+            {
+                DialogResult = false;
+            }
             Close();
         }
 
@@ -55,6 +79,12 @@ namespace SchoolCanteenApp.Views
         {
             DialogResult = false;
             Close();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            _context.Dispose();
         }
     }
 }

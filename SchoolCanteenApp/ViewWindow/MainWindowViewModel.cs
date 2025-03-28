@@ -12,18 +12,15 @@ namespace SchoolCanteenApp.ViewWindow
     public class MainWindowViewModel : BaseViewModel
     {
         // Поля и свойства
-        private string _firstName;
-        private string _lastName;
-        private int? _idClass;
         private ObservableCollection<Student> _students;
         private Student _selectedStudent;
-        private Student _newStudent;
         private ObservableCollection<Class> _classes;
         private ObservableCollection<Dish> _dishes;
         private ObservableCollection<MealPlan> _mealPlans;
         private Class _selectedClass;
         private Dish _selectedDish;
         private MealPlan _selectedMealPlan;
+      
 
         // Команды
         public ICommand AddStudentCommand { get; }
@@ -98,6 +95,7 @@ namespace SchoolCanteenApp.ViewWindow
             MealPlans = new ObservableCollection<MealPlan>();
 
             // Инициализация команд
+
             AddStudentCommand = new RelayCommand(OpenAddStudentWindow);
             EditStudentCommand = new RelayCommand(OpenEditStudentWindow, CanExecuteStudentCommand);
             DeleteStudentCommand = new RelayCommand(DeleteStudent, CanExecuteStudentCommand);
@@ -107,7 +105,7 @@ namespace SchoolCanteenApp.ViewWindow
             DeleteClassCommand = new RelayCommand(DeleteClass, CanExecuteClassCommand);
 
             AddDishCommand = new RelayCommand(OpenAddDishWindow);
-            EditDishCommand = new RelayCommand(OpenEditDishWindow, CanExecuteDishCommand);
+            EditDishCommand = new RelayCommand(OpenEditDishWindow, CanExecuteDishCommand); // Добавлено
             DeleteDishCommand = new RelayCommand(DeleteDish, CanExecuteDishCommand);
 
             AddMealPlanCommand = new RelayCommand(OpenAddMealPlanWindow);
@@ -147,6 +145,11 @@ namespace SchoolCanteenApp.ViewWindow
         {
             if (SelectedStudent == null) return;
 
+            var result = MessageBox.Show("Удалить этого ученика?", "Подтверждение удаления",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
             try
             {
                 using (var context = new SchoolCanteenEntities())
@@ -182,10 +185,21 @@ namespace SchoolCanteenApp.ViewWindow
             var window = new EditClassWindow(SelectedClass);
             if (window.ShowDialog() == true) LoadClasses();
         }
+        private void OpenEditDishWindow(object obj)
+        {
+            if (SelectedDish == null) return;
 
+            var window = new EditDishWindow(SelectedDish);
+            if (window.ShowDialog() == true) LoadDishes();
+        }
         private void DeleteClass(object obj)
         {
             if (SelectedClass == null) return;
+
+            var result = MessageBox.Show("Удалить этот класс?", "Подтверждение удаления",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
 
             try
             {
@@ -228,21 +242,7 @@ namespace SchoolCanteenApp.ViewWindow
             if (window.ShowDialog() == true) LoadDishes();
         }
 
-        private void OpenEditDishWindow(object obj)
-        {
-            if (SelectedDish == null) return;
-
-            var result = MessageBox.Show("Вы уверены, что хотите редактировать это блюдо?",
-                "Подтверждение",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                var window = new EditDishWindow(SelectedDish);
-                if (window.ShowDialog() == true) LoadDishes();
-            }
-        }
+        
 
         private void DeleteDish(object obj)
         {
@@ -325,6 +325,11 @@ namespace SchoolCanteenApp.ViewWindow
         private void DeleteMealPlan(object obj)
         {
             if (SelectedMealPlan == null) return;
+
+            var result = MessageBox.Show("Удалить эту запись плана питания?", "Подтверждение удаления",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
 
             try
             {

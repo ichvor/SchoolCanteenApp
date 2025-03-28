@@ -1,4 +1,5 @@
 ﻿using SchoolCanteenApp.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
@@ -9,14 +10,28 @@ namespace SchoolCanteenApp.Views
     public partial class EditDishWindow : Window
     {
         private readonly Dish _originalDish;
-        private readonly Dish _editableDish;
+        private Dish _editableDish;
+        private readonly SchoolCanteenEntities _context;
 
         public EditDishWindow(Dish selectedDish)
         {
             InitializeComponent();
 
-            // Создаем копию объекта для редактирования
-            _originalDish = selectedDish;
+            _context = new SchoolCanteenEntities();
+
+            // Загружаем блюдо с ингредиентами в текущем контексте
+            _originalDish = _context.Dish
+                .Include(d => d.Ingredient)
+                .FirstOrDefault(d => d.IdDish == selectedDish.IdDish);
+
+            if (_originalDish == null)
+            {
+                MessageBox.Show("Блюдо не найдено");
+                Close();
+                return;
+            }
+
+            // Создаем копию для редактирования
             _editableDish = new Dish
             {
                 IdDish = _originalDish.IdDish,
@@ -25,15 +40,15 @@ namespace SchoolCanteenApp.Views
                 Ingredient = new ObservableCollection<Ingredient>(_originalDish.Ingredient)
             };
 
-            using (var context = new SchoolCanteenEntities())
-            {
-                context.Entry(_editableDish).State = EntityState.Unchanged;
-                IngredientsList.ItemsSource = context.Ingredient.ToList();
+            // Загружаем все ингредиенты
+            var allIngredients = _context.Ingredient.ToList();
+            IngredientsList.ItemsSource = allIngredients;
 
-                foreach (var ingredient in _editableDish.Ingredient)
-                {
-                    IngredientsList.SelectedItems.Add(ingredient);
-                }
+            // Выделяем текущие ингредиенты
+            foreach (var ingredient in _editableDish.Ingredient)
+            {
+                var item = allIngredients.FirstOrDefault(i => i.IdIngredient == ingredient.IdIngredient);
+                if (item != null) IngredientsList.SelectedItems.Add(item);
             }
 
             DataContext = _editableDish;
@@ -46,30 +61,28 @@ namespace SchoolCanteenApp.Views
 
             if (result == MessageBoxResult.Yes)
             {
-                using (var context = new SchoolCanteenEntities())
+                try
                 {
-                    var dishToUpdate = context.Dish
-                        .Include(d => d.Ingredient)
-                        .FirstOrDefault(d => d.IdDish == _originalDish.IdDish);
+                    // Обновляем оригинальный объект
+                    _originalDish.DishName = _editableDish.DishName;
+                    _originalDish.Price = _editableDish.Price;
 
-                    if (dishToUpdate != null)
+                    // Обновляем ингредиенты
+                    _originalDish.Ingredient.Clear();
+                    foreach (Ingredient ingredient in IngredientsList.SelectedItems)
                     {
-                        // Обновляем свойства
-                        dishToUpdate.DishName = _editableDish.DishName;
-                        dishToUpdate.Price = _editableDish.Price;
-
-                        // Обновляем ингредиенты
-                        dishToUpdate.Ingredient.Clear();
-                        foreach (Ingredient ingredient in IngredientsList.SelectedItems)
-                        {
-                            var dbIngredient = context.Ingredient.Find(ingredient.IdIngredient);
-                            dishToUpdate.Ingredient.Add(dbIngredient);
-                        }
-
-                        context.SaveChanges();
+                        var dbIngredient = _context.Ingredient.Find(ingredient.IdIngredient);
+                        _originalDish.Ingredient.Add(dbIngredient);
                     }
+
+                    _context.SaveChanges();
+                    DialogResult = true;
                 }
-                DialogResult = true;
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+                    DialogResult = false;
+                }
             }
             else
             {
@@ -82,6 +95,12 @@ namespace SchoolCanteenApp.Views
         {
             DialogResult = false;
             Close();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            _context.Dispose();
         }
     }
 }
