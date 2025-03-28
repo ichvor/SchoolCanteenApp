@@ -23,7 +23,6 @@ namespace SchoolCanteenApp.Model
     
         public int IdDish { get; set; }
         public string DishName { get; set; }
-        public string NutritionalValue { get; set; }
         public decimal Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

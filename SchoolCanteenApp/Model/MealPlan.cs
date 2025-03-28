@@ -24,5 +24,6 @@ namespace SchoolCanteenApp.Model
         public virtual Meal Meal { get; set; }
         public virtual Paid Paid { get; set; }
         public virtual Student Student { get; set; }
+        
     }
 }
