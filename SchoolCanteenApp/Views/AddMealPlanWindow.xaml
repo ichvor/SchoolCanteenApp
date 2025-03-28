@@ -11,28 +11,17 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Ученик -->
             <RowDefinition Height="Auto"/>
-            <!-- Комбобокс ученика -->
             <RowDefinition Height="Auto"/>
-            <!-- Прием пищи -->
             <RowDefinition Height="Auto"/>
-            <!-- Комбобокс приема пищи -->
             <RowDefinition Height="Auto"/>
-            <!-- День недели -->
             <RowDefinition Height="Auto"/>
-            <!-- Комбобокс дня -->
             <RowDefinition Height="Auto"/>
-            <!-- Статус оплаты -->
             <RowDefinition Height="Auto"/>
-            <!-- Комбобокс статуса -->
             <RowDefinition Height="*"/>
-            <!-- Пустое пространство -->
             <RowDefinition Height="Auto"/>
-            <!-- Кнопки -->
         </Grid.RowDefinitions>
 
-        <!-- Ученик -->
         <TextBlock Grid.Row="0" Text="Ученик:" Margin="0 0 0 5"/>
         <ComboBox Grid.Row="1" 
                 x:Name="StudentsCombo"
@@ -41,7 +30,6 @@
                 SelectedValue="{Binding IdStudent}"
                 Margin="0 0 0 10"/>
 
-        <!-- Прием пищи -->
         <TextBlock Grid.Row="2" Text="Прием пищи:" Margin="0 0 0 5"/>
         <ComboBox Grid.Row="3" 
                 x:Name="MealsCombo"
@@ -50,7 +38,6 @@
                 SelectedValue="{Binding IdMeal}"
                 Margin="0 0 0 10"/>
 
-        <!-- День недели -->
         <TextBlock Grid.Row="4" Text="День недели:" Margin="0 0 0 5"/>
         <ComboBox Grid.Row="5" 
                 x:Name="DaysCombo"
@@ -59,7 +46,6 @@
                 SelectedValue="{Binding IdDay}"
                 Margin="0 0 0 10"/>
 
-        <!-- Статус оплаты -->
         <TextBlock Grid.Row="6" Text="Статус оплаты:" Margin="0 0 0 5"/>
         <ComboBox Grid.Row="7" 
                 x:Name="PaidStatusCombo"
@@ -68,7 +54,6 @@
                 SelectedValue="{Binding IdPaid}"
                 Margin="0 0 0 15"/>
 
-        <!-- Кнопки -->
         <StackPanel Grid.Row="9" 
                   Orientation="Horizontal" 
                   HorizontalAlignment="Right"

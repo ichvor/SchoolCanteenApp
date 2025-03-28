@@ -14,36 +14,28 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Имя -->
             <RowDefinition Height="Auto"/>
-            <!-- Поле имени -->
             <RowDefinition Height="Auto"/>
-            <!-- Фамилия -->
             <RowDefinition Height="Auto"/>
-            <!-- Поле фамилии -->
             <RowDefinition Height="Auto"/>
-            <!-- Надпись "Класс" -->
             <RowDefinition Height="Auto"/>
-            <!-- ComboBox -->
             <RowDefinition Height="*"/>
-            <!-- Свободное пространство -->
             <RowDefinition Height="Auto"/>
-            <!-- Кнопки -->
+          
         </Grid.RowDefinitions>
 
-        <!-- Имя -->
         <TextBlock Grid.Row="0" Text="Имя:" Margin="0 0 0 5"/>
         <TextBox Grid.Row="1" 
                  Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
                  Margin="0 0 0 10"/>
 
-        <!-- Фамилия -->
+       
         <TextBlock Grid.Row="2" Text="Фамилия:" Margin="0 0 0 5"/>
         <TextBox Grid.Row="3" 
                  Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
                  Margin="0 0 0 10"/>
 
-        <!-- Класс -->
+     
         <TextBlock Grid.Row="4" Text="Класс:" Margin="0 0 0 5"/>
         <ComboBox Grid.Row="5"
                 x:Name="ClassComboBox"
@@ -54,7 +46,7 @@
                 HorizontalAlignment="Stretch"
                 Margin="0 0 0 15"/>
 
-        <!-- Кнопки -->
+      
         <StackPanel Grid.Row="7" 
                   Orientation="Horizontal" 
                   HorizontalAlignment="Right"

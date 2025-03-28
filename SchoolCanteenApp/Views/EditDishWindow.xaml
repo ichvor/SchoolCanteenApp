@@ -11,30 +11,20 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Название блюда -->
             <RowDefinition Height="Auto"/>
-            <!-- Поле названия -->
             <RowDefinition Height="Auto"/>
-            <!-- Цена -->
             <RowDefinition Height="Auto"/>
-            <!-- Поле цены -->
             <RowDefinition Height="Auto"/>
-            <!-- Надпись Ингредиенты -->
             <RowDefinition Height="*"/>
-            <!-- Список ингредиентов -->
             <RowDefinition Height="Auto"/>
-            <!-- Кнопки -->
         </Grid.RowDefinitions>
 
-        <!-- Название блюда -->
         <TextBlock Grid.Row="0" Text="Название блюда:" Margin="0 0 0 5"/>
         <TextBox Grid.Row="1" Text="{Binding DishName}" Margin="0 0 0 10"/>
 
-        <!-- Цена -->
         <TextBlock Grid.Row="2" Text="Цена:" Margin="0 0 0 5"/>
         <TextBox Grid.Row="3" Text="{Binding Price}" Margin="0 0 0 10"/>
 
-        <!-- Ингредиенты -->
         <TextBlock Grid.Row="4" Text="Ингредиенты:" Margin="0 0 0 5"/>
         <ListBox Grid.Row="5"
                  x:Name="IngredientsList"
@@ -49,8 +39,7 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-
-        <!-- Кнопки -->
+      
         <StackPanel Grid.Row="6" 
                     Orientation="Horizontal" 
                     HorizontalAlignment="Right"
