@@ -109,8 +109,29 @@
     <Compile Include="Model\Teacher.cs">
       <DependentUpon>SchoolCanteenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddClassWindow.xaml.cs">
+      <DependentUpon>AddClassWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddDishWindow.xaml.cs">
+      <DependentUpon>AddDishWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddMealPlanWindow.xaml.cs">
+      <DependentUpon>AddMealPlanWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddStudentWindow.xaml.cs">
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditClassWindow.xaml.cs">
+      <DependentUpon>EditClassWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditDishWindow.xaml.cs">
+      <DependentUpon>EditDishWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditMealPlanWindow.xaml.cs">
+      <DependentUpon>EditMealPlanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditStudentWindow.xaml.cs">
+      <DependentUpon>EditStudentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -121,7 +142,36 @@
     </Compile>
     <Compile Include="ViewWindow\BaseViewModel.cs" />
     <Compile Include="ViewWindow\MainWindowViewModel.cs" />
+    <Compile Include="ViewWindow\RelayCommand.cs" />
+    <Page Include="Views\AddClassWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddDishWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddMealPlanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddStudentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditClassWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditDishWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditMealPlanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditStudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

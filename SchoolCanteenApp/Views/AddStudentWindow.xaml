@@ -6,7 +6,21 @@
         xmlns:local="clr-namespace:SchoolCanteenApp.Views"
         mc:Ignorable="d"
         Title="AddStudentWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="Имя"/>
+            <TextBox Text="{Binding FirstName}"/>
+
+            <TextBlock Text="Фамилия"/>
+            <TextBox Text="{Binding LastName}"/>
+
+            <TextBlock Text="Класс"/>
+            <ComboBox x:Name="ClassComboBox" 
+                      SelectedValue="{Binding IdClass}"
+                      DisplayMemberPath="Class1"
+                      SelectedValuePath="IdClass"/>
+
+            <Button Content="Сохранить" Click="SaveButton_Click" Margin="0 10"/>
+        </StackPanel>
     </Grid>
 </Window>

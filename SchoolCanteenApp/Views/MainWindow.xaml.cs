@@ -23,29 +23,83 @@ namespace SchoolCanteenApp.Views
         public MainWindow()
         {
             InitializeComponent();
-
             DataContext = new MainWindowViewModel();
 
         }
 
+
         private void Button_Click_AddStudent(object sender, RoutedEventArgs e)
         {
-            AddStudentWindow addStudentWindow = new AddStudentWindow();
-            addStudentWindow.Owner = this;
-            addStudentWindow.ShowDialog();
+
         }
 
-        private void Button_Click_LoadStudent(object sender, RoutedEventArgs e)
+        private void Button_Click_EditStudent(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindowViewModel).LoadStudent();
+
         }
 
         private void Button_Click_DeleteStudent(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindowViewModel).DeleteStudent();
+
+        }
+
+        private void Button_Click_AddClass(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void Button_Click_EditClass(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_DeleteClass(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_AddDish(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_EditDish(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_DeleteDish(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_AddMeal(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_EditMeal(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_DeleteMeal(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
         {
 
         }

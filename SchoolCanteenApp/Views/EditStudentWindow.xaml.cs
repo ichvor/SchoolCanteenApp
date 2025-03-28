@@ -16,16 +16,17 @@ using System.Windows.Shapes;
 namespace SchoolCanteenApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AddStudentWindow.xaml
+    /// Логика взаимодействия для EditStudentWindow.xaml
     /// </summary>
-    public partial class AddStudentWindow : Window
+    public partial class EditStudentWindow : Window
     {
-        private readonly Student _newStudent = new Student();
+        private readonly Student _student;
 
-        public AddStudentWindow()
+        public EditStudentWindow(Student student)
         {
             InitializeComponent();
-            DataContext = _newStudent;
+            _student = student;
+            DataContext = _student;
 
             // Загрузка классов для ComboBox
             using (var context = new SchoolCanteenEntities())
@@ -33,6 +34,7 @@ namespace SchoolCanteenApp.Views
                 ClassComboBox.ItemsSource = context.Class.ToList();
                 ClassComboBox.DisplayMemberPath = "Class1";
                 ClassComboBox.SelectedValuePath = "IdClass";
+                ClassComboBox.SelectedValue = _student.IdClass;
             }
         }
 
@@ -40,11 +42,23 @@ namespace SchoolCanteenApp.Views
         {
             using (var context = new SchoolCanteenEntities())
             {
-                context.Student.Add(_newStudent);
-                context.SaveChanges();
+                var studentToUpdate = context.Student.Find(_student.IdStudent);
+                if (studentToUpdate != null)
+                {
+                    studentToUpdate.FirstName = _student.FirstName;
+                    studentToUpdate.LastName = _student.LastName;
+                    studentToUpdate.IdClass = _student.IdClass;
+                    context.SaveChanges();
+                }
             }
             DialogResult = true;
             Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
         }
     }
 }

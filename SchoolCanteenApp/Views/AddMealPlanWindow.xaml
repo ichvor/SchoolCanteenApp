@@ -1,0 +1,57 @@
+﻿<Window x:Class="SchoolCanteenApp.Views.AddMealPlanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавить план питания" 
+        Height="400" 
+        Width="500"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Ученик:"/>
+        <ComboBox Grid.Row="1" 
+                  x:Name="StudentsCombo"
+                  DisplayMemberPath="FullName"
+                  SelectedValuePath="IdStudent"
+                  SelectedValue="{Binding IdStudent}"
+                  Margin="0 5"/>
+
+        <TextBlock Grid.Row="2" Text="Прием пищи:"/>
+        <ComboBox Grid.Row="3" 
+                  x:Name="MealsCombo"
+                  DisplayMemberPath="MealType"
+                  SelectedValuePath="IdMeal"
+                  SelectedValue="{Binding IdMeal}"
+                  Margin="0 5"/>
+
+        <TextBlock Grid.Row="4" Text="День недели:"/>
+        <ComboBox Grid.Row="5" 
+                  x:Name="DaysCombo"
+                  DisplayMemberPath="DayName"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding IdDay}"
+                  Margin="0 5"/>
+
+        <TextBlock Grid.Row="6" Text="Статус оплаты:"/>
+        <ComboBox Grid.Row="7" 
+                  x:Name="PaidStatusCombo"
+                  DisplayMemberPath="Paid1"
+                  SelectedValuePath="IdPaid"
+                  SelectedValue="{Binding IdPaid}"
+                  Margin="0 5"/>
+
+        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" Width="80" Click="SaveButton_Click" Margin="0 0 10 0"/>
+            <Button Content="Отмена" Width="80" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

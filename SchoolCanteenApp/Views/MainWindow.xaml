@@ -12,16 +12,18 @@
             <TabItem Header="Классы">
                 <DockPanel>
 
-                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                         <Button Content="Добавить" Command="{Binding AddClassCommand}" Margin="5" Padding="10,5"/>
                         <Button Content="Редактировать" Command="{Binding EditClassCommand}" 
-                        CommandParameter="{Binding SelectedItem, ElementName=classesGrid}"
-                        Margin="5" Padding="10,5"/>
+                    CommandParameter="{Binding SelectedClass}"
+                    Margin="5" Padding="10,5"/>
                         <Button Content="Удалить" Command="{Binding DeleteClassCommand}" 
-                        CommandParameter="{Binding SelectedItem, ElementName=classesGrid}"
-                        Margin="5" Padding="10,5"/>
+                    CommandParameter="{Binding SelectedClass}"
+                    Margin="5" Padding="10,5"/>
                     </StackPanel>
-                    <DataGrid ItemsSource="{Binding Classes}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid ItemsSource="{Binding Classes}" 
+                SelectedItem="{Binding SelectedClass}"
+                AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding IdClass}"/>
                             <DataGridTextColumn Header="Класс" Binding="{Binding Class1}"/>
@@ -36,13 +38,13 @@
             <TabItem Header="Ученики">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                        <Button Content="Добавить" Command="{Binding AddStudentCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Добавить" Command="{Binding AddStudentCommand}" Margin="5" Padding="10,5" Click="Button_Click_AddStudent"/>
                         <Button Content="Редактировать" Command="{Binding EditStudentCommand}" 
                     CommandParameter="{Binding SelectedStudent}" 
-                    Margin="5" Padding="10,5"/>
+                    Margin="5" Padding="10,5" Click="Button_Click_EditStudent"/>
                         <Button Content="Удалить" Command="{Binding DeleteStudentCommand}" 
                     CommandParameter="{Binding SelectedStudent}" 
-                    Margin="5" Padding="10,5"/>
+                    Margin="5" Padding="10,5" Click="Button_Click_DeleteStudent"/>
                     </StackPanel>
 
                     <DataGrid ItemsSource="{Binding Students}" 
@@ -60,20 +62,18 @@
 
             <TabItem Header="Блюда">
                 <DockPanel>
-                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
-                        <Button Content="Добавить" 
-                        Command="{Binding AddDishCommand}" 
-                        Margin="5" Padding="10,5"/>
-                        <Button Content="Редактировать" 
-                        Command="{Binding EditDishCommand}" 
-                        CommandParameter="{Binding SelectedItem, ElementName=dishesGrid}"
-                        Margin="5" Padding="10,5"/>
-                        <Button Content="Удалить" 
-                        Command="{Binding DeleteDishCommand}" 
-                        CommandParameter="{Binding SelectedItem, ElementName=dishesGrid}"
-                        Margin="5" Padding="10,5"/>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddDishCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Редактировать" Command="{Binding EditDishCommand}" 
+                    CommandParameter="{Binding SelectedDish}"
+                    Margin="5" Padding="10,5"/>
+                        <Button Content="Удалить" Command="{Binding DeleteDishCommand}" 
+                    CommandParameter="{Binding SelectedDish}"
+                    Margin="5" Padding="10,5"/>
                     </StackPanel>
-                    <DataGrid ItemsSource="{Binding Dishes}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid ItemsSource="{Binding Dishes}" 
+                SelectedItem="{Binding SelectedDish}"
+                AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Название" Binding="{Binding DishName}"/>
                             <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
@@ -99,13 +99,15 @@
             <TabItem Header="План питания" >
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                        <Button Content="Добавить" Command="{Binding AddMealPlanCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Добавить" Command="{Binding AddMealPlanCommand}" Margin="5" Padding="10,5" Click="Button_Click_AddMeal"/>
                         <Button Content="Редактировать" Command="{Binding EditMealPlanCommand}" 
-                CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}" Margin="5" Padding="10,5"/>
+                CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}" Margin="5" Padding="10,5" Click="Button_Click_EditMeal"/>
                         <Button Content="Удалить" Command="{Binding DeleteMealPlanCommand}" 
-                CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}" Margin="5" Padding="10,5"/>
+                CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}" Margin="5" Padding="10,5" Click="Button_Click_DeleteMeal"/>
                     </StackPanel>
-                    <DataGrid ItemsSource="{Binding MealPlans}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid ItemsSource="{Binding MealPlans}" 
+          SelectedItem="{Binding SelectedMealPlan}"
+          AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Ученик" Binding="{Binding Student.FullName}"/>
                             <DataGridTextColumn Header="Прием пищи" Binding="{Binding Meal.MealType}"/>

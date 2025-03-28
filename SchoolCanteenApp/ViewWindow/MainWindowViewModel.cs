@@ -4,11 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Data.Entity;
+using System.Windows.Input;
+using SchoolCanteenApp.Views;
 
 namespace SchoolCanteenApp.ViewWindow
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        // Поля и свойства
         private string _firstName;
         private string _lastName;
         private int? _idClass;
@@ -18,6 +21,30 @@ namespace SchoolCanteenApp.ViewWindow
         private ObservableCollection<Class> _classes;
         private ObservableCollection<Dish> _dishes;
         private ObservableCollection<MealPlan> _mealPlans;
+        private Class _selectedClass;
+        private Dish _selectedDish;
+        private MealPlan _selectedMealPlan;
+
+        // Команды
+        public ICommand AddStudentCommand { get; }
+        public ICommand EditStudentCommand { get; }
+        public ICommand DeleteStudentCommand { get; }
+        public ICommand AddClassCommand { get; }
+        public ICommand EditClassCommand { get; }
+        public ICommand DeleteClassCommand { get; }
+        public ICommand AddDishCommand { get; }
+        public ICommand EditDishCommand { get; }
+        public ICommand DeleteDishCommand { get; }
+        public ICommand AddMealPlanCommand { get; }
+        public ICommand EditMealPlanCommand { get; }
+        public ICommand DeleteMealPlanCommand { get; }
+
+        // Коллекции
+        public ObservableCollection<Student> Students
+        {
+            get => _students;
+            set => SetPropertyChanged(ref _students, value, nameof(Students));
+        }
 
         public ObservableCollection<Class> Classes
         {
@@ -37,39 +64,145 @@ namespace SchoolCanteenApp.ViewWindow
             set => SetPropertyChanged(ref _mealPlans, value, nameof(MealPlans));
         }
 
+        // Выбранные элементы
+        public Student SelectedStudent
+        {
+            get => _selectedStudent;
+            set => SetPropertyChanged(ref _selectedStudent, value);
+        }
+
+        public Class SelectedClass
+        {
+            get => _selectedClass;
+            set => SetPropertyChanged(ref _selectedClass, value);
+        }
+
+        public Dish SelectedDish
+        {
+            get => _selectedDish;
+            set => SetPropertyChanged(ref _selectedDish, value);
+        }
+
+        public MealPlan SelectedMealPlan
+        {
+            get => _selectedMealPlan;
+            set => SetPropertyChanged(ref _selectedMealPlan, value);
+        }
+
         public MainWindowViewModel()
         {
-            // Инициализация всех коллекций
+            // Инициализация коллекций
             Students = new ObservableCollection<Student>();
             Classes = new ObservableCollection<Class>();
             Dishes = new ObservableCollection<Dish>();
             MealPlans = new ObservableCollection<MealPlan>();
 
-            NewStudent = new Student();
-            LoadAllData(); // Загрузка всех данных при инициализации
+            // Инициализация команд
+            AddStudentCommand = new RelayCommand(OpenAddStudentWindow);
+            EditStudentCommand = new RelayCommand(OpenEditStudentWindow, CanExecuteStudentCommand);
+            DeleteStudentCommand = new RelayCommand(DeleteStudent, CanExecuteStudentCommand);
+
+            AddClassCommand = new RelayCommand(OpenAddClassWindow);
+            EditClassCommand = new RelayCommand(OpenEditClassWindow, CanExecuteClassCommand);
+            DeleteClassCommand = new RelayCommand(DeleteClass, CanExecuteClassCommand);
+
+            AddDishCommand = new RelayCommand(OpenAddDishWindow);
+            EditDishCommand = new RelayCommand(OpenEditDishWindow, CanExecuteDishCommand);
+            DeleteDishCommand = new RelayCommand(DeleteDish, CanExecuteDishCommand);
+
+            AddMealPlanCommand = new RelayCommand(OpenAddMealPlanWindow);
+            EditMealPlanCommand = new RelayCommand(OpenEditMealPlanWindow, CanExecuteMealPlanCommand);
+            DeleteMealPlanCommand = new RelayCommand(DeleteMealPlan, CanExecuteMealPlanCommand);
+
+            LoadAllData();
         }
 
-        public void LoadAllData()
+        #region Общие методы
+        private void LoadAllData()
         {
             LoadStudents();
             LoadClasses();
             LoadDishes();
             LoadMealPlans();
         }
+        #endregion
 
-        public void LoadStudents()
+        #region Студенты
+        private bool CanExecuteStudentCommand(object obj) => SelectedStudent != null;
+
+        private void OpenAddStudentWindow(object obj)
         {
-            Students.Clear();
-            using (var context = new SchoolCanteenEntities())
-            {
-                var students = context.Student
-                    .Include(s => s.Class) // Добавляем подгрузку классов
-                    .ToList();
+            var window = new AddStudentWindow();
+            if (window.ShowDialog() == true) LoadStudents();
+        }
 
-                foreach (var student in students)
+        private void OpenEditStudentWindow(object obj)
+        {
+            if (SelectedStudent == null) return;
+            var window = new EditStudentWindow(SelectedStudent);
+            if (window.ShowDialog() == true) LoadStudents();
+        }
+
+        private void DeleteStudent(object obj)
+        {
+            if (SelectedStudent == null) return;
+
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
                 {
-                    Students.Add(student);
+                    var student = context.Student.Find(SelectedStudent.IdStudent);
+                    if (student != null)
+                    {
+                        context.Student.Remove(student);
+                        context.SaveChanges();
+                        LoadStudents();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
+            }
+        }
+        #endregion
+
+        #region Классы
+        private bool CanExecuteClassCommand(object obj) => SelectedClass != null;
+
+        private void OpenAddClassWindow(object obj)
+        {
+            var window = new AddClassWindow();
+            if (window.ShowDialog() == true) LoadClasses();
+        }
+
+        private void OpenEditClassWindow(object obj)
+        {
+            if (SelectedClass == null) return;
+            var window = new EditClassWindow(SelectedClass);
+            if (window.ShowDialog() == true) LoadClasses();
+        }
+
+        private void DeleteClass(object obj)
+        {
+            if (SelectedClass == null) return;
+
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    var cls = context.Class.Find(SelectedClass.IdClass);
+                    if (cls != null)
+                    {
+                        context.Class.Remove(cls);
+                        context.SaveChanges();
+                        LoadClasses();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
             }
         }
 
@@ -78,14 +211,64 @@ namespace SchoolCanteenApp.ViewWindow
             Classes.Clear();
             using (var context = new SchoolCanteenEntities())
             {
-                var classes = context.Class
-                    .Include(c => c.Teacher) // Подгружаем учителей
-                    .ToList();
-
-                foreach (var cls in classes)
+                foreach (var cls in context.Class.Include(c => c.Teacher).ToList())
                 {
                     Classes.Add(cls);
                 }
+            }
+        }
+        #endregion
+
+        #region Блюда
+        private bool CanExecuteDishCommand(object obj) => SelectedDish != null;
+
+        private void OpenAddDishWindow(object obj)
+        {
+            var window = new AddDishWindow();
+            if (window.ShowDialog() == true) LoadDishes();
+        }
+
+        private void OpenEditDishWindow(object obj)
+        {
+            if (SelectedDish == null) return;
+
+            var result = MessageBox.Show("Вы уверены, что хотите редактировать это блюдо?",
+                "Подтверждение",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                var window = new EditDishWindow(SelectedDish);
+                if (window.ShowDialog() == true) LoadDishes();
+            }
+        }
+
+        private void DeleteDish(object obj)
+        {
+            if (SelectedDish == null) return;
+
+            var result = MessageBox.Show("Удалить это блюдо?", "Подтверждение удаления",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    var dish = context.Dish.Find(SelectedDish.IdDish);
+                    if (dish != null)
+                    {
+                        context.Dish.Remove(dish);
+                        context.SaveChanges();
+                        LoadDishes();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
             }
         }
 
@@ -94,14 +277,71 @@ namespace SchoolCanteenApp.ViewWindow
             Dishes.Clear();
             using (var context = new SchoolCanteenEntities())
             {
-                var dishes = context.Dish
-                    .Include(d => d.Ingredient) // Подгружаем ингредиенты
-                    .ToList();
-
-                foreach (var dish in dishes)
+                foreach (var dish in context.Dish.Include(d => d.Ingredient).ToList())
                 {
                     Dishes.Add(dish);
                 }
+            }
+        }
+        #endregion
+
+        #region План питания
+        private bool CanExecuteMealPlanCommand(object obj) => SelectedMealPlan != null;
+
+        private void OpenAddMealPlanWindow(object obj)
+        {
+            var window = new AddMealPlanWindow();
+            if (window.ShowDialog() == true) LoadMealPlans();
+        }
+
+        private void OpenEditMealPlanWindow(object obj)
+        {
+            if (SelectedMealPlan == null) return;
+
+            try
+            {
+                // Перезагружаем полные данные
+                using (var context = new SchoolCanteenEntities())
+                {
+                    var fullMealPlan = context.MealPlan
+                        .Include(mp => mp.Student)
+                        .Include(mp => mp.Meal)
+                        .Include(mp => mp.Day)
+                        .Include(mp => mp.Paid)
+                        .FirstOrDefault(mp => mp.IdMealPlan == SelectedMealPlan.IdMealPlan);
+
+                    if (fullMealPlan == null) return;
+
+                    var window = new EditMealPlanWindow(fullMealPlan);
+                    if (window.ShowDialog() == true) LoadMealPlans();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка открытия: {ex.Message}");
+            }
+        }
+
+        private void DeleteMealPlan(object obj)
+        {
+            if (SelectedMealPlan == null) return;
+
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    var plan = context.MealPlan.Find(SelectedMealPlan.IdMealPlan);
+                    if (plan != null)
+                    {
+                        context.MealPlan.Remove(plan);
+                        context.SaveChanges();
+                        LoadMealPlans();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
             }
         }
 
@@ -110,115 +350,31 @@ namespace SchoolCanteenApp.ViewWindow
             MealPlans.Clear();
             using (var context = new SchoolCanteenEntities())
             {
-                var mealPlans = context.MealPlan
+                var plans = context.MealPlan
                     .Include(mp => mp.Student)
                     .Include(mp => mp.Meal)
                     .Include(mp => mp.Day)
                     .Include(mp => mp.Paid)
                     .ToList();
 
-                foreach (var plan in mealPlans)
+                foreach (var plan in plans)
                 {
                     MealPlans.Add(plan);
                 }
             }
         }
-        // Изменённые свойства согласно модели Student
-        public string FirstName
-        {
-            get => _firstName;
-            set => SetPropertyChanged(ref _firstName, value, nameof(FirstName));
-        }
+        #endregion
 
-        public string LastName
-        {
-            get => _lastName;
-            set => SetPropertyChanged(ref _lastName, value, nameof(LastName));
-        }
-
-        public int? IdClass
-        {
-            get => _idClass;
-            set => SetPropertyChanged(ref _idClass, value, nameof(IdClass));
-        }
-
-        public ObservableCollection<Student> Students
-        {
-            get => _students;
-            set => SetPropertyChanged(ref _students, value, nameof(Students));
-        }
-
-        public Student SelectedStudent
-        {
-            get => _selectedStudent;
-            set => SetPropertyChanged(ref _selectedStudent, value, nameof(SelectedStudent));
-        }
-
-        public Student NewStudent
-        {
-            get => _newStudent;
-            set => SetPropertyChanged(ref _newStudent, value, nameof(NewStudent));
-        }
-
-
-        public void LoadStudent()
+        // Остальные методы загрузки данных
+        public void LoadStudents()
         {
             Students.Clear();
             using (var context = new SchoolCanteenEntities())
             {
-                var students = context.Student.ToList();
-                foreach (var student in students)
+                foreach (var student in context.Student.Include(s => s.Class).ToList())
                 {
                     Students.Add(student);
                 }
-            }
-        }
-
-        public void DeleteStudent()
-        {
-            if (SelectedStudent == null) return;
-
-            try
-            {
-                using (var context = new SchoolCanteenEntities())
-                {
-                    var studentToDelete = context.Student.Find(SelectedStudent.IdStudent);
-                    if (studentToDelete != null)
-                    {
-                        context.Student.Remove(studentToDelete);
-                        context.SaveChanges();
-                        LoadStudents(); // Используем обновленный метод с подгрузкой
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public bool AddNewStudent()
-        {
-            try
-            {
-                using (var context = new SchoolCanteenEntities())
-                {
-                    context.Student.Add(new Student
-                    {
-                        FirstName = NewStudent.FirstName,
-                        LastName = NewStudent.LastName,
-                        IdClass = NewStudent.IdClass
-                    });
-                    context.SaveChanges();
-                    LoadStudents(); // Используем обновленный метод с подгрузкой
-                    NewStudent = new Student();
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
             }
         }
     }
