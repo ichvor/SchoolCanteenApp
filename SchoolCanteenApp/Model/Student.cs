@@ -30,4 +30,5 @@ namespace SchoolCanteenApp.Model
         public virtual ICollection<MealPlan> MealPlan { get; set; }
         public string FullName => $"{LastName} {FirstName}";
     }
+
 }
