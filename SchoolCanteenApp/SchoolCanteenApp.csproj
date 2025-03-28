@@ -217,20 +217,21 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Assets\Icon.png" />
-    <Resource Include="208aa6c40bfc11f0bdceea120268400c_1.ico" />
     <Content Include="Model\SchoolCanteenModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SchoolCanteenModel.Context.cs</LastGenOutput>
       <DependentUpon>SchoolCanteenModel.edmx</DependentUpon>
+      <LastGenOutput>SchoolCanteenModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model\SchoolCanteenModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SchoolCanteenModel.edmx</DependentUpon>
       <LastGenOutput>SchoolCanteenModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon.png" />
+    <Resource Include="208aa6c40bfc11f0bdceea120268400c_1.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

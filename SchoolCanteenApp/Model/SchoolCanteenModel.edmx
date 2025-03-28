@@ -26,7 +26,6 @@
           </Key>
           <Property Name="IdDish" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DishName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="NutritionalValue" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="DishIngredient">
@@ -299,7 +298,6 @@
           </Key>
           <Property Name="IdDish" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DishName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NutritionalValue" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <NavigationProperty Name="Ingredient" Relationship="Self.DishIngredient" FromRole="Dish" ToRole="Ingredient" />
           <NavigationProperty Name="Meal" Relationship="Self.MealDish" FromRole="Dish" ToRole="Meal" />
@@ -514,7 +512,6 @@
               <MappingFragment StoreEntitySet="Dish">
                 <ScalarProperty Name="IdDish" ColumnName="IdDish" />
                 <ScalarProperty Name="DishName" ColumnName="DishName" />
-                <ScalarProperty Name="NutritionalValue" ColumnName="NutritionalValue" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
