@@ -21,7 +21,7 @@ namespace SchoolCanteenApp.Views
 
             _context = new SchoolCanteenEntities();
             _originalClass = _context.Class
-                .Include(c => c.Teacher) // Исправлено: убрана лишняя скобка
+                .Include(c => c.Teacher)
                 .FirstOrDefault(c => c.IdClass == selectedClass.IdClass);
 
             if (_originalClass == null)
@@ -31,7 +31,7 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Создаем копию для редактирования
+           
             _editableClass = new Class
             {
                 IdClass = _originalClass.IdClass,
@@ -39,7 +39,7 @@ namespace SchoolCanteenApp.Views
                 IdTeacher = _originalClass.IdTeacher
             };
 
-            // Загрузка учителей
+            
             TeacherComboBox.ItemsSource = _context.Teacher.ToList();
             TeacherComboBox.SelectedValue = _editableClass.IdTeacher;
 
@@ -55,7 +55,7 @@ namespace SchoolCanteenApp.Views
             {
                 try
                 {
-                    // Обновляем оригинальный объект
+                    
                     _originalClass.Class1 = _editableClass.Class1;
                     _originalClass.IdTeacher = _editableClass.IdTeacher;
 

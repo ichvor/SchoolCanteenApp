@@ -31,7 +31,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Создаем копию для редактирования
             _editableMealPlan = new MealPlan
             {
                 IdMealPlan = _originalMealPlan.IdMealPlan,
@@ -41,13 +40,11 @@ namespace SchoolCanteenApp.Views
                 IdPaid = _originalMealPlan.IdPaid
             };
 
-            // Загрузка данных
             StudentsCombo.ItemsSource = _context.Student.ToList();
             MealsCombo.ItemsSource = _context.Meal.ToList();
             DaysCombo.ItemsSource = _context.Day.ToList();
             PaidStatusCombo.ItemsSource = _context.Paid.ToList();
 
-            // Установка значений
             StudentsCombo.SelectedValue = _editableMealPlan.IdStudent;
             MealsCombo.SelectedValue = _editableMealPlan.IdMeal;
             DaysCombo.SelectedValue = _editableMealPlan.IdDay;
@@ -65,7 +62,7 @@ namespace SchoolCanteenApp.Views
             {
                 try
                 {
-                    // Обновляем оригинальный объект
+                
                     _originalMealPlan.IdStudent = _editableMealPlan.IdStudent;
                     _originalMealPlan.IdMeal = _editableMealPlan.IdMeal;
                     _originalMealPlan.IdDay = _editableMealPlan.IdDay;

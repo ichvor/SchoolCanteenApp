@@ -19,7 +19,7 @@ namespace SchoolCanteenApp.Views
 
             _context = new SchoolCanteenEntities();
 
-            // Загружаем блюдо с ингредиентами в текущем контексте
+           
             _originalDish = _context.Dish
                 .Include(d => d.Ingredient)
                 .FirstOrDefault(d => d.IdDish == selectedDish.IdDish);
@@ -31,7 +31,7 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Создаем копию для редактирования
+          
             _editableDish = new Dish
             {
                 IdDish = _originalDish.IdDish,
@@ -40,11 +40,11 @@ namespace SchoolCanteenApp.Views
                 Ingredient = new ObservableCollection<Ingredient>(_originalDish.Ingredient)
             };
 
-            // Загружаем все ингредиенты
+           
             var allIngredients = _context.Ingredient.ToList();
             IngredientsList.ItemsSource = allIngredients;
 
-            // Выделяем текущие ингредиенты
+          
             foreach (var ingredient in _editableDish.Ingredient)
             {
                 var item = allIngredients.FirstOrDefault(i => i.IdIngredient == ingredient.IdIngredient);
@@ -63,11 +63,11 @@ namespace SchoolCanteenApp.Views
             {
                 try
                 {
-                    // Обновляем оригинальный объект
+                  
                     _originalDish.DishName = _editableDish.DishName;
                     _originalDish.Price = _editableDish.Price;
 
-                    // Обновляем ингредиенты
+                 
                     _originalDish.Ingredient.Clear();
                     foreach (Ingredient ingredient in IngredientsList.SelectedItems)
                     {

@@ -11,7 +11,6 @@ namespace SchoolCanteenApp.ViewWindow
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        // Поля и свойства
         private ObservableCollection<Student> _students;
         private Student _selectedStudent;
         private ObservableCollection<Class> _classes;
@@ -22,7 +21,6 @@ namespace SchoolCanteenApp.ViewWindow
         private MealPlan _selectedMealPlan;
       
 
-        // Команды
         public ICommand AddStudentCommand { get; }
         public ICommand EditStudentCommand { get; }
         public ICommand DeleteStudentCommand { get; }
@@ -36,7 +34,6 @@ namespace SchoolCanteenApp.ViewWindow
         public ICommand EditMealPlanCommand { get; }
         public ICommand DeleteMealPlanCommand { get; }
 
-        // Коллекции
         public ObservableCollection<Student> Students
         {
             get => _students;
@@ -61,7 +58,6 @@ namespace SchoolCanteenApp.ViewWindow
             set => SetPropertyChanged(ref _mealPlans, value, nameof(MealPlans));
         }
 
-        // Выбранные элементы
         public Student SelectedStudent
         {
             get => _selectedStudent;
@@ -88,13 +84,11 @@ namespace SchoolCanteenApp.ViewWindow
 
         public MainWindowViewModel()
         {
-            // Инициализация коллекций
             Students = new ObservableCollection<Student>();
             Classes = new ObservableCollection<Class>();
             Dishes = new ObservableCollection<Dish>();
             MealPlans = new ObservableCollection<MealPlan>();
 
-            // Инициализация команд
 
             AddStudentCommand = new RelayCommand(OpenAddStudentWindow);
             EditStudentCommand = new RelayCommand(OpenEditStudentWindow, CanExecuteStudentCommand);
@@ -300,7 +294,6 @@ namespace SchoolCanteenApp.ViewWindow
 
             try
             {
-                // Перезагружаем полные данные
                 using (var context = new SchoolCanteenEntities())
                 {
                     var fullMealPlan = context.MealPlan
@@ -370,7 +363,6 @@ namespace SchoolCanteenApp.ViewWindow
         }
         #endregion
 
-        // Остальные методы загрузки данных
         public void LoadStudents()
         {
             Students.Clear();

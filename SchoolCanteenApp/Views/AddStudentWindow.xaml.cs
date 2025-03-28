@@ -27,7 +27,6 @@ namespace SchoolCanteenApp.Views
             InitializeComponent();
             DataContext = _newStudent;
 
-            // Загрузка классов для ComboBox
             using (var context = new SchoolCanteenEntities())
             {
                 ClassComboBox.ItemsSource = context.Class.ToList();
