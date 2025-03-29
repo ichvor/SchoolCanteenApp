@@ -22,7 +22,6 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверки
             if (string.IsNullOrWhiteSpace(_newDish.DishName))
             {
                 MessageBox.Show("Введите название блюда!", "Ошибка",
@@ -44,7 +43,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Сохранение
             try
             {
                 using (var context = new SchoolCanteenEntities())

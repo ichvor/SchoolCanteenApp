@@ -25,7 +25,6 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверки
             if (StudentsCombo.SelectedItem == null)
             {
                 MessageBox.Show("Выберите ученика!", "Ошибка",
@@ -54,7 +53,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Сохранение
             try
             {
                 using (var context = new SchoolCanteenEntities())

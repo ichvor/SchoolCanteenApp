@@ -56,7 +56,6 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка всех обязательных полей
             var errorMessage = new StringBuilder();
 
             if (StudentsCombo.SelectedValue == null)

@@ -37,7 +37,6 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверки
             if (string.IsNullOrWhiteSpace(_newStudent.FirstName))
             {
                 MessageBox.Show("Введите имя ученика!", "Ошибка",
@@ -59,7 +58,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Сохранение
             try
             {
                 using (var context = new SchoolCanteenEntities())

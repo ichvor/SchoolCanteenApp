@@ -57,7 +57,6 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка имени
             if (string.IsNullOrWhiteSpace(_editableStudent.FirstName))
             {
                 MessageBox.Show("Имя ученика не может быть пустым!", "Ошибка",
@@ -66,7 +65,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Проверка фамилии
             if (string.IsNullOrWhiteSpace(_editableStudent.LastName))
             {
                 MessageBox.Show("Фамилия ученика не может быть пустой!", "Ошибка",
@@ -75,7 +73,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Проверка класса
             if (ClassComboBox.SelectedValue == null)
             {
                 MessageBox.Show("Необходимо выбрать класс!", "Ошибка",

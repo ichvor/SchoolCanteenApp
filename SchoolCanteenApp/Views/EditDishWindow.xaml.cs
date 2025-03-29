@@ -57,7 +57,6 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка названия блюда
             if (string.IsNullOrWhiteSpace(_editableDish.DishName))
             {
                 MessageBox.Show("Название блюда не может быть пустым!", "Ошибка",
@@ -66,7 +65,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Проверка цены
             if (_editableDish.Price <= 0)
             {
                 MessageBox.Show("Цена должна быть положительным числом!", "Ошибка",
@@ -75,7 +73,6 @@ namespace SchoolCanteenApp.Views
                 return;
             }
 
-            // Проверка ингредиентов
             if (IngredientsList.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Необходимо выбрать хотя бы один ингредиент!", "Ошибка",
