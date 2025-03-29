@@ -1,4 +1,5 @@
 ﻿using SchoolCanteenApp.Model;
+using System;
 using System.Linq;
 using System.Windows;
 
@@ -24,13 +25,50 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new SchoolCanteenEntities())
+            // Проверки
+            if (StudentsCombo.SelectedItem == null)
             {
-                context.MealPlan.Add(_newMealPlan);
-                context.SaveChanges();
+                MessageBox.Show("Выберите ученика!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            DialogResult = true;
-            Close();
+
+            if (MealsCombo.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите прием пищи!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (DaysCombo.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите день!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (PaidStatusCombo.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите статус оплаты!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Сохранение
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    context.MealPlan.Add(_newMealPlan);
+                    context.SaveChanges();
+                    DialogResult = true;
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

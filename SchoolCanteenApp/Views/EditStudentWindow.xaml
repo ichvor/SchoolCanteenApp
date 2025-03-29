@@ -24,14 +24,16 @@
         </Grid.RowDefinitions>
      
         <TextBlock Grid.Row="0" Text="Имя:" Margin="0 0 0 5"/>
-        <TextBox Grid.Row="1" 
-                 Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0 0 0 10"/>
+        <TextBox x:Name="FirstNameTextBox"
+         Grid.Row="1" 
+         Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
+         Margin="0 0 0 10"/>
 
         <TextBlock Grid.Row="2" Text="Фамилия:" Margin="0 0 0 5"/>
-        <TextBox Grid.Row="3" 
-                 Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0 0 0 10"/>
+        <TextBox x:Name="LastNameTextBox"
+         Grid.Row="3" 
+         Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+         Margin="0 0 0 10"/>
 
         <TextBlock Grid.Row="4" Text="Класс:" Margin="0 0 0 5"/>
         <ComboBox Grid.Row="5"

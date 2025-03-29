@@ -20,10 +20,16 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Название блюда:" Margin="0 0 0 5"/>
-        <TextBox Grid.Row="1" Text="{Binding DishName}" Margin="0 0 0 10"/>
+        <TextBox x:Name="DishNameTextBox"
+         Grid.Row="1" 
+         Text="{Binding DishName}" 
+         Margin="0 0 0 10"/>
 
         <TextBlock Grid.Row="2" Text="Цена:" Margin="0 0 0 5"/>
-        <TextBox Grid.Row="3" Text="{Binding Price}" Margin="0 0 0 10"/>
+        <TextBox x:Name="PriceTextBox"
+         Grid.Row="3" 
+         Text="{Binding Price}" 
+         Margin="0 0 0 10"/>
 
         <TextBlock Grid.Row="4" Text="Ингредиенты:" Margin="0 0 0 5"/>
         <ListBox Grid.Row="5"

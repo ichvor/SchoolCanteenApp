@@ -2,6 +2,7 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Windows;
 
 namespace SchoolCanteenApp.Views
@@ -55,6 +56,25 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка всех обязательных полей
+            var errorMessage = new StringBuilder();
+
+            if (StudentsCombo.SelectedValue == null)
+                errorMessage.AppendLine("Не выбран ученик");
+            if (MealsCombo.SelectedValue == null)
+                errorMessage.AppendLine("Не выбран прием пищи");
+            if (DaysCombo.SelectedValue == null)
+                errorMessage.AppendLine("Не выбран день недели");
+            if (PaidStatusCombo.SelectedValue == null)
+                errorMessage.AppendLine("Не выбран статус оплаты");
+
+            if (errorMessage.Length > 0)
+            {
+                MessageBox.Show($"Обнаружены ошибки:\n{errorMessage}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             var result = MessageBox.Show("Сохранить изменения?", "Подтверждение",
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
 

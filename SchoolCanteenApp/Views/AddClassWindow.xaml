@@ -6,7 +6,7 @@
         Width="400"
         MinHeight="250"
         MinWidth="400"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" >
 
     <Grid Margin="10">
         <Grid.RowDefinitions>

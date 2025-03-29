@@ -1,4 +1,5 @@
 ﻿using SchoolCanteenApp.Model;
+using System;
 using System.Linq;
 using System.Windows;
 
@@ -21,14 +22,47 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new SchoolCanteenEntities())
+            // Проверки
+            if (string.IsNullOrWhiteSpace(_newDish.DishName))
             {
-                _newDish.Ingredient = IngredientsList.SelectedItems.Cast<Ingredient>().ToList();
-                context.Dish.Add(_newDish);
-                context.SaveChanges();
+                MessageBox.Show("Введите название блюда!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            DialogResult = true;
-            Close();
+
+            if (_newDish.Price <= 0)
+            {
+                MessageBox.Show("Цена должна быть больше нуля!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (IngredientsList.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Выберите хотя бы один ингредиент!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Сохранение
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    _newDish.Ingredient = IngredientsList.SelectedItems
+                        .Cast<Ingredient>()
+                        .ToList();
+
+                    context.Dish.Add(_newDish);
+                    context.SaveChanges();
+                    DialogResult = true;
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

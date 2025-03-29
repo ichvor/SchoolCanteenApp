@@ -1,4 +1,5 @@
 ﻿using SchoolCanteenApp.Model;
+using System;
 using System.Linq;
 using System.Windows;
 
@@ -21,13 +22,36 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new SchoolCanteenEntities())
+            // Проверки
+            if (string.IsNullOrWhiteSpace(_newClass.Class1))
             {
-                context.Class.Add(_newClass);
-                context.SaveChanges();
+                MessageBox.Show("Введите название класса!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            DialogResult = true;
-            Close();
+
+            if (TeacherComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите классного руководителя!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Сохранение
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    context.Class.Add(_newClass);
+                    context.SaveChanges();
+                    DialogResult = true;
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

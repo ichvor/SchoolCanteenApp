@@ -37,13 +37,43 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new SchoolCanteenEntities())
+            // Проверки
+            if (string.IsNullOrWhiteSpace(_newStudent.FirstName))
             {
-                context.Student.Add(_newStudent);
-                context.SaveChanges();
+                MessageBox.Show("Введите имя ученика!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            DialogResult = true;
-            Close();
+
+            if (string.IsNullOrWhiteSpace(_newStudent.LastName))
+            {
+                MessageBox.Show("Введите фамилию ученика!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (ClassComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите класс!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Сохранение
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    context.Student.Add(_newStudent);
+                    context.SaveChanges();
+                    DialogResult = true;
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

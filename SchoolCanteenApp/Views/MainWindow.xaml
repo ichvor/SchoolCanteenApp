@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Столовая" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Grid>
-        <TabControl>
+        <TabControl >
 
-            <TabItem Header="Классы">
+            <TabItem Header="Классы" >
                 <DockPanel>
 
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
@@ -23,7 +23,7 @@
                     </StackPanel>
                     <DataGrid ItemsSource="{Binding Classes}" 
                 SelectedItem="{Binding SelectedClass}"
-                AutoGenerateColumns="False" IsReadOnly="True">
+                AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding IdClass}"/>
                             <DataGridTextColumn Header="Класс" Binding="{Binding Class1}"/>

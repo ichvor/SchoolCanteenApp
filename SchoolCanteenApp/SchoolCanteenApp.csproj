@@ -144,6 +144,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewWindow\BaseViewModel.cs" />
+    <Compile Include="ViewWindow\ListCountConverter.cs" />
     <Compile Include="ViewWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewWindow\RelayCommand.cs" />
     <Page Include="Views\AddClassWindow.xaml">

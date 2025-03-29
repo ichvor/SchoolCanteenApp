@@ -57,6 +57,33 @@ namespace SchoolCanteenApp.Views
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Проверка имени
+            if (string.IsNullOrWhiteSpace(_editableStudent.FirstName))
+            {
+                MessageBox.Show("Имя ученика не может быть пустым!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                FirstNameTextBox.Focus();
+                return;
+            }
+
+            // Проверка фамилии
+            if (string.IsNullOrWhiteSpace(_editableStudent.LastName))
+            {
+                MessageBox.Show("Фамилия ученика не может быть пустой!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                LastNameTextBox.Focus();
+                return;
+            }
+
+            // Проверка класса
+            if (ClassComboBox.SelectedValue == null)
+            {
+                MessageBox.Show("Необходимо выбрать класс!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                ClassComboBox.Focus();
+                return;
+            }
+
             var result = MessageBox.Show("Сохранить изменения?", "Подтверждение",
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
 
