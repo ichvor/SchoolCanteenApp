@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cdafcae0132d4ed3a83f975fb17ee4f6" Name="Diagram1">
+        <EntityTypeShape EntityType="SchoolCanteenModel.Class" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Day" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Dish" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Ingredient" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Meal" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.MealPlan" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Paid" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Student" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolCanteenModel.Teacher" Width="1.5" PointX="1.5" PointY="15.25" IsExpanded="true" />
+        <AssociationConnector Association="SchoolCanteenModel.FK__Class__IdTeacher__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.FK__Student__IdClass__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.FK_MealPlan_Day" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.FK__MealPlan__IdMeal__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.FK__MealPlan__IdPaid__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.FK__MealPlan__IdStud__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.DishIngredient" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolCanteenModel.MealDish" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

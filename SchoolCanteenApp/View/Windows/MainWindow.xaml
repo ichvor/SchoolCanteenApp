@@ -1,0 +1,132 @@
+﻿<Window x:Class="SchoolCanteenApp.View.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolCanteenApp.View.Windows"
+        mc:Ignorable="d"
+        Title="Столовая" Height="450" Width="800" MinHeight="450" MinWidth="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <TabControl >
+
+            <TabItem Header="Классы" >
+                <DockPanel>
+
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddClassCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Редактировать" Command="{Binding EditClassCommand}" 
+                    CommandParameter="{Binding SelectedClass}"
+                    Margin="5" Padding="10,5"/>
+                        <Button Content="Удалить" Command="{Binding DeleteClassCommand}" 
+                    CommandParameter="{Binding SelectedClass}"
+                    Margin="5" Padding="10,5"/>
+                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding Classes}" 
+                SelectedItem="{Binding SelectedClass}"
+                AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                           
+                            <DataGridTextColumn Header="Класс" Binding="{Binding Class1}"/>
+                            <DataGridTextColumn Header="Учитель" 
+                                     Binding="{Binding Teacher.LastName}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+
+            <TabItem Header="Ученики">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddStudentCommand}" Margin="5" Padding="10,5" Click="Button_Click_AddStudent"/>
+                        <Button Content="Редактировать" Command="{Binding EditStudentCommand}" 
+                    CommandParameter="{Binding SelectedStudent}" 
+                    Margin="5" Padding="10,5" Click="Button_Click_EditStudent"/>
+                        <Button Content="Удалить" Command="{Binding DeleteStudentCommand}" 
+                    CommandParameter="{Binding SelectedStudent}" 
+                    Margin="5" Padding="10,5" Click="Button_Click_DeleteStudent"/>
+                    </StackPanel>
+
+                    <DataGrid ItemsSource="{Binding Students}" 
+                     AutoGenerateColumns="False"
+                     SelectedItem="{Binding SelectedStudent}" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Класс" Binding="{Binding Class.Class1}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+
+            <TabItem Header="Блюда">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddDishCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Редактировать" Command="{Binding EditDishCommand}" 
+                    CommandParameter="{Binding SelectedDish}"
+                    Margin="5" Padding="10,5"/>
+                        <Button Content="Удалить" Command="{Binding DeleteDishCommand}" 
+                    CommandParameter="{Binding SelectedDish}"
+                    Margin="5" Padding="10,5"/>
+                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding Dishes}" 
+                SelectedItem="{Binding SelectedDish}"
+                AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" Binding="{Binding DishName}"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
+                            <DataGridTemplateColumn Header="Ингредиенты">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Ingredient}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding IngredientName}"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+
+            <TabItem Header="План питания" >
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddMealPlanCommand}" Margin="5" Padding="10,5" Click="Button_Click_AddMeal"/>
+                        <Button Content="Редактировать" Command="{Binding EditMealPlanCommand}" 
+                CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}" Margin="5" Padding="10,5" Click="Button_Click_EditMeal"/>
+                        <Button Content="Удалить" Command="{Binding DeleteMealPlanCommand}" 
+                CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}" Margin="5" Padding="10,5" Click="Button_Click_DeleteMeal"/>
+                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding MealPlans}" 
+          SelectedItem="{Binding SelectedMealPlan}"
+          AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ученик" Binding="{Binding Student.FullName}"/>
+                            <DataGridTextColumn Header="Прием пищи" Binding="{Binding Meal.MealType}"/>
+                            <DataGridTextColumn Header="День" Binding="{Binding Day.DayName}"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Paid.Paid1}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        <Grid Background="#80000000" 
+          Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar IsIndeterminate="True" Width="100" Height="20" Foreground="White"/>
+                <TextBlock Text="Подождите..." Foreground="White" Margin="0 10"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
