@@ -7,28 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SchoolCanteenApp.Model
+namespace SchoolCanteenApp.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Student
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class Class
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Student()
+        public Class()
         {
-            this.MealPlan = new HashSet<MealPlan>();
+            this.Students = new HashSet<Student>();
         }
+        [Key]
+        public int IdClass { get; set; }
+        public string Class1 { get; set; }
+        public Nullable<int> IdTeacher { get; set; }
     
-        public int IdStudent { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Nullable<int> IdClass { get; set; }
-    
-        public virtual Class Class { get; set; }
+        public virtual Teacher Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MealPlan> MealPlan { get; set; }
-        public string FullName => $"{LastName} {FirstName}";
-
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

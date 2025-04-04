@@ -1,0 +1,30 @@
+﻿<Window x:Class="SchoolCanteenApp.Views.ClassView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование класса" Height="200" Width="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Название класса:" Grid.Row="0"/>
+        <TextBox Text="{Binding CurrentClass.ClassName}" Grid.Row="1" Margin="0,0,0,10"/>
+
+        <Label Content="Классный руководитель:" Grid.Row="2"/>
+        <ComboBox ItemsSource="{Binding Teachers}" 
+                  DisplayMemberPath="LastName"
+                  SelectedValuePath="IdTeacher"
+                  SelectedValue="{Binding CurrentClass.IdTeacher}"
+                  Grid.Row="2" Margin="0,28,0,16"/>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" Command="{Binding SaveCommand}" 
+                    Margin="5" Padding="10,5" Width="80"/>
+            <Button Content="Отмена" IsCancel="True" 
+                    Margin="5" Padding="10,5" Width="80"/>
+        </StackPanel>
+    </Grid>
+</Window>

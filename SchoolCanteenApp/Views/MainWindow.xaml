@@ -1,0 +1,118 @@
+﻿<Window x:Class="SchoolCanteenApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Школьная столовая" Height="600" Width="800" MinHeight="600" MinWidth="800">
+    <Grid>
+        <TabControl>
+         
+            <TabItem Header="Классы">
+                <DockPanel>
+                    
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
+                        <Button Content="Добавить" Command="{Binding AddClassCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Редактировать" Command="{Binding EditClassCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=classesGrid}"
+                                Margin="5" Padding="10,5"/>
+                        <Button Content="Удалить" Command="{Binding DeleteClassCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=classesGrid}"
+                                Margin="5" Padding="10,5"/>
+                    </StackPanel>
+                    <DataGrid x:Name="classesGrid" ItemsSource="{Binding Classes}" AutoGenerateColumns="False"  IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding IdClass}"/>
+                            <DataGridTextColumn Header="Класс" Binding="{Binding Class1}"/>
+                            <DataGridTextColumn Header="Классный руководитель" 
+                          Binding="{Binding Teacher.LastName}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+            
+            <TabItem Header="Ученики">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddStudentCommand}"/>
+                        <Button Content="Редактировать" Command="{Binding EditStudentCommand}" 
+                        CommandParameter="{Binding SelectedItem, ElementName=studentsGrid}"/>
+                        <Button Content="Удалить" Command="{Binding DeleteStudentCommand}" 
+                        CommandParameter="{Binding SelectedItem, ElementName=studentsGrid}"/>
+                    </StackPanel>
+                    <DataGrid x:Name="studentsGrid" ItemsSource="{Binding Students}" AutoGenerateColumns="False"  IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"/>
+                            <DataGridTextColumn Header="Класс" Binding="{Binding Class.Class1}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+         
+            <TabItem Header="Блюда">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5">
+                        <Button Content="Добавить" 
+                                Command="{Binding AddDishCommand}" 
+                                Margin="5" Padding="10,5"/>
+                        <Button Content="Редактировать" 
+                                Command="{Binding EditDishCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=dishesGrid}"
+                                Margin="5" Padding="10,5"/>
+                        <Button Content="Удалить" 
+                                Command="{Binding DeleteDishCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=dishesGrid}"
+                                Margin="5" Padding="10,5"/>
+                    </StackPanel>
+                    <DataGrid x:Name="dishesGrid" 
+                            ItemsSource="{Binding Dishes}" 
+                            AutoGenerateColumns="False"
+                            Margin="5"  IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" 
+                                              Binding="{Binding DishName}" 
+                                              Width="*"/>
+                            <DataGridTextColumn Header="Цена" 
+                                              Binding="{Binding Price}" 
+                                              Width="100"/>
+                            <DataGridTemplateColumn Header="Ингредиенты" 
+                                                  Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding Ingredients}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding IngredientName}"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+           
+            <TabItem Header="План питания">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddMealPlanCommand}"/>
+                        <Button Content="Редактировать" Command="{Binding EditMealPlanCommand}" 
+                        CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}"/>
+                        <Button Content="Удалить" Command="{Binding DeleteMealPlanCommand}" 
+                        CommandParameter="{Binding SelectedItem, ElementName=mealPlansGrid}"/>
+                    </StackPanel>
+                    <DataGrid x:Name="mealPlansGrid" ItemsSource="{Binding MealPlans}" AutoGenerateColumns="False"  IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ученик" Binding="{Binding Student.FullName}"/>
+                            <DataGridTextColumn Header="Прием пищи" Binding="{Binding Meal.MealType}"/>
+                            <DataGridTextColumn Header="День" Binding="{Binding Day.DayName}"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Paid.Paid1}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

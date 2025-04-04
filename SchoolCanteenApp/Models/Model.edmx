@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище SchoolCanteenModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="IdClass" />
+          </Key>
+          <Property Name="IdClass" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="IdTeacher" Type="int" />
+        </EntityType>
+        <EntityType Name="Day">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayName" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dish">
+          <Key>
+            <PropertyRef Name="IdDish" />
+          </Key>
+          <Property Name="IdDish" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DishName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NutritionalValue" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DishIngredient">
+          <Key>
+            <PropertyRef Name="IdDish" />
+            <PropertyRef Name="IdIngredient" />
+          </Key>
+          <Property Name="IdDish" Type="int" Nullable="false" />
+          <Property Name="IdIngredient" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IdIngredient" />
+          </Key>
+          <Property Name="IdIngredient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IngredientName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="IdMeal" />
+          </Key>
+          <Property Name="IdMeal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MealType" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MealDish">
+          <Key>
+            <PropertyRef Name="IdMeal" />
+            <PropertyRef Name="IdDish" />
+          </Key>
+          <Property Name="IdMeal" Type="int" Nullable="false" />
+          <Property Name="IdDish" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MealPlan">
+          <Key>
+            <PropertyRef Name="IdMealPlan" />
+          </Key>
+          <Property Name="IdMealPlan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStudent" Type="int" />
+          <Property Name="IdMeal" Type="int" />
+          <Property Name="IdPaid" Type="int" />
+          <Property Name="IdDay" Type="int" />
+        </EntityType>
+        <EntityType Name="Paid">
+          <Key>
+            <PropertyRef Name="IdPaid" />
+          </Key>
+          <Property Name="IdPaid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Paid" Type="nvarchar" MaxLength="35" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="IdStudent" />
+          </Key>
+          <Property Name="IdStudent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdClass" Type="int" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="IdTeacher" />
+          </Key>
+          <Property Name="IdTeacher" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Class__IdTeacher__49C3F6B7">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="IdTeacher" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="IdTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DishIngre__IdDis__4AB81AF0">
+          <End Role="Dish" Type="Self.Dish" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DishIngredient" Type="Self.DishIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dish">
+              <PropertyRef Name="IdDish" />
+            </Principal>
+            <Dependent Role="DishIngredient">
+              <PropertyRef Name="IdDish" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DishIngre__IdIng__4BAC3F29">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DishIngredient" Type="Self.DishIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IdIngredient" />
+            </Principal>
+            <Dependent Role="DishIngredient">
+              <PropertyRef Name="IdIngredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealDish__IdDish__4CA06362">
+          <End Role="Dish" Type="Self.Dish" Multiplicity="1" />
+          <End Role="MealDish" Type="Self.MealDish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dish">
+              <PropertyRef Name="IdDish" />
+            </Principal>
+            <Dependent Role="MealDish">
+              <PropertyRef Name="IdDish" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealDish__IdMeal__4D94879B">
+          <End Role="Meal" Type="Self.Meal" Multiplicity="1" />
+          <End Role="MealDish" Type="Self.MealDish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="IdMeal" />
+            </Principal>
+            <Dependent Role="MealDish">
+              <PropertyRef Name="IdMeal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealPlan__IdMeal__4E88ABD4">
+          <End Role="Meal" Type="Self.Meal" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="IdMeal" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdMeal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealPlan__IdPaid__4F7CD00D">
+          <End Role="Paid" Type="Self.Paid" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paid">
+              <PropertyRef Name="IdPaid" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdPaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealPlan__IdStud__5070F446">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="IdStudent" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__IdClass__5165187F">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="IdClass" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdClass" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealPlan_Day">
+          <End Role="Day" Type="Self.Day" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Day">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdDay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SchoolCanteenModelContainer">
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Day" EntityType="Self.Day" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dish" EntityType="Self.Dish" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DishIngredient" EntityType="Self.DishIngredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meal" EntityType="Self.Meal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MealDish" EntityType="Self.MealDish" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MealPlan" EntityType="Self.MealPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paid" EntityType="Self.Paid" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Class__IdTeacher__49C3F6B7" Association="Self.FK__Class__IdTeacher__49C3F6B7">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DishIngre__IdDis__4AB81AF0" Association="Self.FK__DishIngre__IdDis__4AB81AF0">
+            <End Role="Dish" EntitySet="Dish" />
+            <End Role="DishIngredient" EntitySet="DishIngredient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DishIngre__IdIng__4BAC3F29" Association="Self.FK__DishIngre__IdIng__4BAC3F29">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="DishIngredient" EntitySet="DishIngredient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealDish__IdDish__4CA06362" Association="Self.FK__MealDish__IdDish__4CA06362">
+            <End Role="Dish" EntitySet="Dish" />
+            <End Role="MealDish" EntitySet="MealDish" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealDish__IdMeal__4D94879B" Association="Self.FK__MealDish__IdMeal__4D94879B">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MealDish" EntitySet="MealDish" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealPlan__IdMeal__4E88ABD4" Association="Self.FK__MealPlan__IdMeal__4E88ABD4">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MealPlan" EntitySet="MealPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealPlan__IdPaid__4F7CD00D" Association="Self.FK__MealPlan__IdPaid__4F7CD00D">
+            <End Role="Paid" EntitySet="Paid" />
+            <End Role="MealPlan" EntitySet="MealPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealPlan__IdStud__5070F446" Association="Self.FK__MealPlan__IdStud__5070F446">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="MealPlan" EntitySet="MealPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__IdClass__5165187F" Association="Self.FK__Student__IdClass__5165187F">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealPlan_Day" Association="Self.FK_MealPlan_Day">
+            <End Role="Day" EntitySet="Day" />
+            <End Role="MealPlan" EntitySet="MealPlan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolCanteenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="IdClass" />
+          </Key>
+          <Property Name="IdClass" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class1" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdTeacher" Type="Int32" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK__Class__IdTeacher__49C3F6B7" FromRole="Class" ToRole="Teacher" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Student__IdClass__5165187F" FromRole="Class" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Day">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MealPlans" Relationship="Self.FK_MealPlan_Day" FromRole="Day" ToRole="MealPlan" />
+        </EntityType>
+        <EntityType Name="Dish">
+          <Key>
+            <PropertyRef Name="IdDish" />
+          </Key>
+          <Property Name="IdDish" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DishName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NutritionalValue" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.DishIngredient" FromRole="Dish" ToRole="Ingredient" />
+          <NavigationProperty Name="Meals" Relationship="Self.MealDish" FromRole="Dish" ToRole="Meal" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IdIngredient" />
+          </Key>
+          <Property Name="IdIngredient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IngredientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Dishes" Relationship="Self.DishIngredient" FromRole="Ingredient" ToRole="Dish" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="IdMeal" />
+          </Key>
+          <Property Name="IdMeal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MealType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MealPlans" Relationship="Self.FK__MealPlan__IdMeal__4E88ABD4" FromRole="Meal" ToRole="MealPlan" />
+          <NavigationProperty Name="Dishes" Relationship="Self.MealDish" FromRole="Meal" ToRole="Dish" />
+        </EntityType>
+        <EntityType Name="MealPlan">
+          <Key>
+            <PropertyRef Name="IdMealPlan" />
+          </Key>
+          <Property Name="IdMealPlan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStudent" Type="Int32" />
+          <Property Name="IdMeal" Type="Int32" />
+          <Property Name="IdPaid" Type="Int32" />
+          <Property Name="IdDay" Type="Int32" />
+          <NavigationProperty Name="Day" Relationship="Self.FK_MealPlan_Day" FromRole="MealPlan" ToRole="Day" />
+          <NavigationProperty Name="Meal" Relationship="Self.FK__MealPlan__IdMeal__4E88ABD4" FromRole="MealPlan" ToRole="Meal" />
+          <NavigationProperty Name="Paid" Relationship="Self.FK__MealPlan__IdPaid__4F7CD00D" FromRole="MealPlan" ToRole="Paid" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__MealPlan__IdStud__5070F446" FromRole="MealPlan" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Paid">
+          <Key>
+            <PropertyRef Name="IdPaid" />
+          </Key>
+          <Property Name="IdPaid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Paid1" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MealPlans" Relationship="Self.FK__MealPlan__IdPaid__4F7CD00D" FromRole="Paid" ToRole="MealPlan" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="IdStudent" />
+          </Key>
+          <Property Name="IdStudent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdClass" Type="Int32" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Student__IdClass__5165187F" FromRole="Student" ToRole="Class" />
+          <NavigationProperty Name="MealPlans" Relationship="Self.FK__MealPlan__IdStud__5070F446" FromRole="Student" ToRole="MealPlan" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="IdTeacher" />
+          </Key>
+          <Property Name="IdTeacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Class__IdTeacher__49C3F6B7" FromRole="Teacher" ToRole="Class" />
+        </EntityType>
+        <Association Name="FK__Class__IdTeacher__49C3F6B7">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="IdTeacher" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="IdTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__IdClass__5165187F">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="IdClass" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IdClass" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MealPlan_Day">
+          <End Role="Day" Type="Self.Day" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Day">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdDay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealPlan__IdMeal__4E88ABD4">
+          <End Role="Meal" Type="Self.Meal" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="IdMeal" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdMeal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealPlan__IdPaid__4F7CD00D">
+          <End Role="Paid" Type="Self.Paid" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paid">
+              <PropertyRef Name="IdPaid" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdPaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealPlan__IdStud__5070F446">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="IdStudent" />
+            </Principal>
+            <Dependent Role="MealPlan">
+              <PropertyRef Name="IdStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DishIngredient">
+          <End Role="Dish" Type="Self.Dish" Multiplicity="*" />
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
+        </Association>
+        <Association Name="MealDish">
+          <End Role="Dish" Type="Self.Dish" Multiplicity="*" />
+          <End Role="Meal" Type="Self.Meal" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SchoolCanteenEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="Days" EntityType="Self.Day" />
+          <EntitySet Name="Dishes" EntityType="Self.Dish" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Meals" EntityType="Self.Meal" />
+          <EntitySet Name="MealPlans" EntityType="Self.MealPlan" />
+          <EntitySet Name="Paids" EntityType="Self.Paid" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <AssociationSet Name="FK__Class__IdTeacher__49C3F6B7" Association="Self.FK__Class__IdTeacher__49C3F6B7">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__IdClass__5165187F" Association="Self.FK__Student__IdClass__5165187F">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MealPlan_Day" Association="Self.FK_MealPlan_Day">
+            <End Role="Day" EntitySet="Days" />
+            <End Role="MealPlan" EntitySet="MealPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealPlan__IdMeal__4E88ABD4" Association="Self.FK__MealPlan__IdMeal__4E88ABD4">
+            <End Role="Meal" EntitySet="Meals" />
+            <End Role="MealPlan" EntitySet="MealPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealPlan__IdPaid__4F7CD00D" Association="Self.FK__MealPlan__IdPaid__4F7CD00D">
+            <End Role="Paid" EntitySet="Paids" />
+            <End Role="MealPlan" EntitySet="MealPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealPlan__IdStud__5070F446" Association="Self.FK__MealPlan__IdStud__5070F446">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="MealPlan" EntitySet="MealPlans" />
+          </AssociationSet>
+          <AssociationSet Name="DishIngredient" Association="Self.DishIngredient">
+            <End Role="Dish" EntitySet="Dishes" />
+            <End Role="Ingredient" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="MealDish" Association="Self.MealDish">
+            <End Role="Dish" EntitySet="Dishes" />
+            <End Role="Meal" EntitySet="Meals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SchoolCanteenModelContainer" CdmEntityContainer="SchoolCanteenEntities">
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="IdClass" ColumnName="IdClass" />
+                <ScalarProperty Name="Class1" ColumnName="Class" />
+                <ScalarProperty Name="IdTeacher" ColumnName="IdTeacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Days">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Day">
+              <MappingFragment StoreEntitySet="Day">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DayName" ColumnName="DayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dishes">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Dish">
+              <MappingFragment StoreEntitySet="Dish">
+                <ScalarProperty Name="IdDish" ColumnName="IdDish" />
+                <ScalarProperty Name="DishName" ColumnName="DishName" />
+                <ScalarProperty Name="NutritionalValue" ColumnName="NutritionalValue" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="IdIngredient" ColumnName="IdIngredient" />
+                <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meals">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Meal">
+              <MappingFragment StoreEntitySet="Meal">
+                <ScalarProperty Name="IdMeal" ColumnName="IdMeal" />
+                <ScalarProperty Name="MealType" ColumnName="MealType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealPlans">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.MealPlan">
+              <MappingFragment StoreEntitySet="MealPlan">
+                <ScalarProperty Name="IdMealPlan" ColumnName="IdMealPlan" />
+                <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
+                <ScalarProperty Name="IdMeal" ColumnName="IdMeal" />
+                <ScalarProperty Name="IdPaid" ColumnName="IdPaid" />
+                <ScalarProperty Name="IdDay" ColumnName="IdDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paids">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Paid">
+              <MappingFragment StoreEntitySet="Paid">
+                <ScalarProperty Name="IdPaid" ColumnName="IdPaid" />
+                <ScalarProperty Name="Paid1" ColumnName="Paid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="IdStudent" ColumnName="IdStudent" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="IdClass" ColumnName="IdClass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SchoolCanteenModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="IdTeacher" ColumnName="IdTeacher" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DishIngredient" TypeName="SchoolCanteenModel.DishIngredient" StoreEntitySet="DishIngredient">
+            <EndProperty Name="Dish">
+              <ScalarProperty Name="IdDish" ColumnName="IdDish" />
+            </EndProperty>
+            <EndProperty Name="Ingredient">
+              <ScalarProperty Name="IdIngredient" ColumnName="IdIngredient" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="MealDish" TypeName="SchoolCanteenModel.MealDish" StoreEntitySet="MealDish">
+            <EndProperty Name="Dish">
+              <ScalarProperty Name="IdDish" ColumnName="IdDish" />
+            </EndProperty>
+            <EndProperty Name="Meal">
+              <ScalarProperty Name="IdMeal" ColumnName="IdMeal" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
