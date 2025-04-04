@@ -37,6 +37,27 @@
                 </DockPanel>
             </TabItem>
 
+            <TabItem Header="Учителя">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Content="Добавить" Command="{Binding AddTeacherCommand}" Margin="5" Padding="10,5"/>
+                        <Button Content="Редактировать" Command="{Binding EditTeacherCommand}" 
+                    CommandParameter="{Binding SelectedTeacher}"
+                    Margin="5" Padding="10,5"/>
+                        <Button Content="Удалить" Command="{Binding DeleteTeacherCommand}" 
+                    CommandParameter="{Binding SelectedTeacher}"
+                    Margin="5" Padding="10,5"/>
+                    </StackPanel>
+                    <DataGrid ItemsSource="{Binding Teachers}" 
+                  SelectedItem="{Binding SelectedTeacher}"
+                  AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
 
             <TabItem Header="Ученики">
                 <DockPanel>

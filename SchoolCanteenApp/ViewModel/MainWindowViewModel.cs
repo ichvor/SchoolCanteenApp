@@ -18,10 +18,14 @@ namespace SchoolCanteenApp.ViewModel
         private ObservableCollection<Class> _classes = new ObservableCollection<Class>();
         private ObservableCollection<Dish> _dishes = new ObservableCollection<Dish>();
         private ObservableCollection<MealPlan> _mealPlans = new ObservableCollection<MealPlan>();
+        private ObservableCollection<Teacher> _teachers = new ObservableCollection<Teacher>();
+
         private Class _selectedClass;
         private Dish _selectedDish;
         private MealPlan _selectedMealPlan;
         private bool _isLoading;
+        private Teacher _selectedTeacher;
+
 
         public ICommand AddStudentCommand { get; }
         public ICommand EditStudentCommand { get; }
@@ -35,6 +39,9 @@ namespace SchoolCanteenApp.ViewModel
         public ICommand AddMealPlanCommand { get; }
         public ICommand EditMealPlanCommand { get; }
         public ICommand DeleteMealPlanCommand { get; }
+        public ICommand AddTeacherCommand { get; }
+        public ICommand EditTeacherCommand { get; }
+        public ICommand DeleteTeacherCommand { get; }
 
         public bool IsLoading
         {
@@ -47,6 +54,13 @@ namespace SchoolCanteenApp.ViewModel
             get => _students;
             set => SetPropertyChanged(ref _students, value, nameof(Students));
         }
+
+        public ObservableCollection<Teacher> Teachers
+        {
+            get => _teachers;
+            set => SetPropertyChanged(ref _teachers, value, nameof(Teachers));
+        }
+
 
         public ObservableCollection<Class> Classes
         {
@@ -66,7 +80,8 @@ namespace SchoolCanteenApp.ViewModel
             set => SetPropertyChanged(ref _mealPlans, value, nameof(MealPlans));
         }
 
-        public Student SelectedStudent { get => _selectedStudent; set => SetPropertyChanged(ref _selectedStudent, value); }
+        public Student SelectedStudent { get => _selectedStudent; set => SetPropertyChanged(ref _selectedStudent, value); }       
+        public Teacher SelectedTeacher { get => _selectedTeacher; set => SetPropertyChanged(ref _selectedTeacher, value); }
         public Class SelectedClass { get => _selectedClass; set => SetPropertyChanged(ref _selectedClass, value); }
         public Dish SelectedDish { get => _selectedDish; set => SetPropertyChanged(ref _selectedDish, value); }
         public MealPlan SelectedMealPlan { get => _selectedMealPlan; set => SetPropertyChanged(ref _selectedMealPlan, value); }
@@ -88,6 +103,9 @@ namespace SchoolCanteenApp.ViewModel
             AddMealPlanCommand = new RelayCommand(OpenAddMealPlanWindow);
             EditMealPlanCommand = new RelayCommand(OpenEditMealPlanWindow, CanExecuteMealPlanCommand);
             DeleteMealPlanCommand = new RelayCommand(DeleteMealPlanAsync, CanExecuteMealPlanCommand);
+            AddTeacherCommand = new RelayCommand(OpenAddTeacherWindow);
+            EditTeacherCommand = new RelayCommand(OpenEditTeacherWindow, CanExecuteTeacherCommand);
+            DeleteTeacherCommand = new RelayCommand(DeleteTeacherAsync, CanExecuteTeacherCommand);
 
             LoadAllDataAsync().ConfigureAwait(false);
         }
@@ -100,6 +118,7 @@ namespace SchoolCanteenApp.ViewModel
             {
                 await Task.WhenAll(
                     LoadStudentsAsync(),
+                    LoadTeachersAsync(),
                     LoadClassesAsync(),
                     LoadDishesAsync(),
                     LoadMealPlansAsync()
@@ -134,7 +153,25 @@ namespace SchoolCanteenApp.ViewModel
                 MessageBox.Show($"Ошибка загрузки учеников: {ex.Message}");
             }
         }
-
+        private async Task LoadTeachersAsync()
+        {
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    var teachers = await context.Teacher.ToListAsync();
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        Teachers.Clear();
+                        foreach (var teacher in teachers) Teachers.Add(teacher);
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки учителей: {ex.Message}");
+            }
+        }
         private async Task LoadClassesAsync()
         {
             try
@@ -520,6 +557,98 @@ namespace SchoolCanteenApp.ViewModel
                         context.MealPlan.Remove(plan);
                         await context.SaveChangesAsync().ConfigureAwait(false);
                         await LoadMealPlansAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка удаления: {ex.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+        #endregion
+
+        #region Teacher Commands
+        private bool CanExecuteTeacherCommand(object obj) => SelectedTeacher != null;
+
+        private void OpenAddTeacherWindow(object obj)
+        {
+            var window = new AddTeacherWindow();
+            window.SaveClicked += async (sender, e) =>
+            {
+                IsLoading = true;
+                try
+                {
+                    await LoadTeachersAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
+                }
+                finally
+                {
+                    Application.Current.Dispatcher.Invoke(() => IsLoading = false);
+                }
+            };
+            window.ShowDialog();
+        }
+
+        private void OpenEditTeacherWindow(object obj)
+        {
+            if (SelectedTeacher == null) return;
+
+            var window = new EditTeacherWindow(SelectedTeacher);
+            window.SaveClicked += async (sender, e) =>
+            {
+                IsLoading = true;
+                try
+                {
+                    await LoadTeachersAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
+                }
+                finally
+                {
+                    Application.Current.Dispatcher.Invoke(() => IsLoading = false);
+                }
+            };
+            window.ShowDialog();
+        }
+
+        private async void DeleteTeacherAsync(object obj)
+        {
+            if (SelectedTeacher == null) return;
+
+            var result = MessageBox.Show("Удалить этого учителя?", "Подтверждение",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            IsLoading = true;
+            try
+            {
+                using (var context = new SchoolCanteenEntities())
+                {
+                    var teacher = await context.Teacher.FindAsync(SelectedTeacher.IdTeacher).ConfigureAwait(false);
+                    if (teacher != null)
+                    {
+                        // Проверяем, не используется ли учитель как классный руководитель
+                        var isClassTeacher = await context.Class.AnyAsync(c => c.IdTeacher == teacher.IdTeacher);
+                        if (isClassTeacher)
+                        {
+                            MessageBox.Show("Нельзя удалить учителя, так как он является классным руководителем!", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        context.Teacher.Remove(teacher);
+                        await context.SaveChangesAsync().ConfigureAwait(false);
+                        await LoadTeachersAsync().ConfigureAwait(false);
                     }
                 }
             }

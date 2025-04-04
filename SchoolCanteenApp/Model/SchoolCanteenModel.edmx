@@ -92,7 +92,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Class__IdTeacher__4AB81AF0">
+        <Association Name="FK__Class__IdTeacher__4CA06362">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
           <End Role="Class" Type="Self.Class" Multiplicity="*" />
           <ReferentialConstraint>
@@ -104,7 +104,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DishIngre__IdDis__4BAC3F29">
+        <Association Name="FK__DishIngre__IdDis__4D94879B">
           <End Role="Dish" Type="Self.Dish" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -118,7 +118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DishIngre__IdIng__4CA06362">
+        <Association Name="FK__DishIngre__IdIng__4E88ABD4">
           <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -132,7 +132,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealDish__IdDish__4D94879B">
+        <Association Name="FK__MealDish__IdDish__4F7CD00D">
           <End Role="Dish" Type="Self.Dish" Multiplicity="1" />
           <End Role="MealDish" Type="Self.MealDish" Multiplicity="*" />
           <ReferentialConstraint>
@@ -144,7 +144,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealDish__IdMeal__4E88ABD4">
+        <Association Name="FK__MealDish__IdMeal__5070F446">
           <End Role="Meal" Type="Self.Meal" Multiplicity="1" />
           <End Role="MealDish" Type="Self.MealDish" Multiplicity="*" />
           <ReferentialConstraint>
@@ -156,7 +156,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealPlan__IdMeal__4F7CD00D">
+        <Association Name="FK__MealPlan__IdMeal__5165187F">
           <End Role="Meal" Type="Self.Meal" Multiplicity="0..1" />
           <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -168,7 +168,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealPlan__IdPaid__5070F446">
+        <Association Name="FK__MealPlan__IdPaid__52593CB8">
           <End Role="Paid" Type="Self.Paid" Multiplicity="0..1" />
           <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,7 +180,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealPlan__IdStud__5165187F">
+        <Association Name="FK__MealPlan__IdStud__534D60F1">
           <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
           <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -192,7 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Student__IdClass__534D60F1">
+        <Association Name="FK__Student__IdClass__5535A963">
           <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
@@ -228,39 +228,39 @@
           <EntitySet Name="Paid" EntityType="Self.Paid" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Class__IdTeacher__4AB81AF0" Association="Self.FK__Class__IdTeacher__4AB81AF0">
+          <AssociationSet Name="FK__Class__IdTeacher__4CA06362" Association="Self.FK__Class__IdTeacher__4CA06362">
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="Class" EntitySet="Class" />
           </AssociationSet>
-          <AssociationSet Name="FK__DishIngre__IdDis__4BAC3F29" Association="Self.FK__DishIngre__IdDis__4BAC3F29">
+          <AssociationSet Name="FK__DishIngre__IdDis__4D94879B" Association="Self.FK__DishIngre__IdDis__4D94879B">
             <End Role="Dish" EntitySet="Dish" />
             <End Role="DishIngredient" EntitySet="DishIngredient" />
           </AssociationSet>
-          <AssociationSet Name="FK__DishIngre__IdIng__4CA06362" Association="Self.FK__DishIngre__IdIng__4CA06362">
+          <AssociationSet Name="FK__DishIngre__IdIng__4E88ABD4" Association="Self.FK__DishIngre__IdIng__4E88ABD4">
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="DishIngredient" EntitySet="DishIngredient" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealDish__IdDish__4D94879B" Association="Self.FK__MealDish__IdDish__4D94879B">
+          <AssociationSet Name="FK__MealDish__IdDish__4F7CD00D" Association="Self.FK__MealDish__IdDish__4F7CD00D">
             <End Role="Dish" EntitySet="Dish" />
             <End Role="MealDish" EntitySet="MealDish" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealDish__IdMeal__4E88ABD4" Association="Self.FK__MealDish__IdMeal__4E88ABD4">
+          <AssociationSet Name="FK__MealDish__IdMeal__5070F446" Association="Self.FK__MealDish__IdMeal__5070F446">
             <End Role="Meal" EntitySet="Meal" />
             <End Role="MealDish" EntitySet="MealDish" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealPlan__IdMeal__4F7CD00D" Association="Self.FK__MealPlan__IdMeal__4F7CD00D">
+          <AssociationSet Name="FK__MealPlan__IdMeal__5165187F" Association="Self.FK__MealPlan__IdMeal__5165187F">
             <End Role="Meal" EntitySet="Meal" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealPlan__IdPaid__5070F446" Association="Self.FK__MealPlan__IdPaid__5070F446">
+          <AssociationSet Name="FK__MealPlan__IdPaid__52593CB8" Association="Self.FK__MealPlan__IdPaid__52593CB8">
             <End Role="Paid" EntitySet="Paid" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealPlan__IdStud__5165187F" Association="Self.FK__MealPlan__IdStud__5165187F">
+          <AssociationSet Name="FK__MealPlan__IdStud__534D60F1" Association="Self.FK__MealPlan__IdStud__534D60F1">
             <End Role="Student" EntitySet="Student" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
-          <AssociationSet Name="FK__Student__IdClass__534D60F1" Association="Self.FK__Student__IdClass__534D60F1">
+          <AssociationSet Name="FK__Student__IdClass__5535A963" Association="Self.FK__Student__IdClass__5535A963">
             <End Role="Class" EntitySet="Class" />
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
@@ -281,8 +281,8 @@
           <Property Name="IdClass" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Class1" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdTeacher" Type="Int32" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK__Class__IdTeacher__4AB81AF0" FromRole="Class" ToRole="Teacher" />
-          <NavigationProperty Name="Student" Relationship="Self.FK__Student__IdClass__534D60F1" FromRole="Class" ToRole="Student" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK__Class__IdTeacher__4CA06362" FromRole="Class" ToRole="Teacher" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__Student__IdClass__5535A963" FromRole="Class" ToRole="Student" />
         </EntityType>
         <EntityType Name="Day">
           <Key>
@@ -316,7 +316,7 @@
           </Key>
           <Property Name="IdMeal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MealType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="MealPlan" Relationship="Self.FK__MealPlan__IdMeal__4F7CD00D" FromRole="Meal" ToRole="MealPlan" />
+          <NavigationProperty Name="MealPlan" Relationship="Self.FK__MealPlan__IdMeal__5165187F" FromRole="Meal" ToRole="MealPlan" />
           <NavigationProperty Name="Dish" Relationship="Self.MealDish" FromRole="Meal" ToRole="Dish" />
         </EntityType>
         <EntityType Name="MealPlan">
@@ -329,9 +329,9 @@
           <Property Name="IdPaid" Type="Int32" />
           <Property Name="IdDay" Type="Int32" />
           <NavigationProperty Name="Day" Relationship="Self.FK_MealPlan_Day" FromRole="MealPlan" ToRole="Day" />
-          <NavigationProperty Name="Meal" Relationship="Self.FK__MealPlan__IdMeal__4F7CD00D" FromRole="MealPlan" ToRole="Meal" />
-          <NavigationProperty Name="Paid" Relationship="Self.FK__MealPlan__IdPaid__5070F446" FromRole="MealPlan" ToRole="Paid" />
-          <NavigationProperty Name="Student" Relationship="Self.FK__MealPlan__IdStud__5165187F" FromRole="MealPlan" ToRole="Student" />
+          <NavigationProperty Name="Meal" Relationship="Self.FK__MealPlan__IdMeal__5165187F" FromRole="MealPlan" ToRole="Meal" />
+          <NavigationProperty Name="Paid" Relationship="Self.FK__MealPlan__IdPaid__52593CB8" FromRole="MealPlan" ToRole="Paid" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__MealPlan__IdStud__534D60F1" FromRole="MealPlan" ToRole="Student" />
         </EntityType>
         <EntityType Name="Paid">
           <Key>
@@ -339,7 +339,7 @@
           </Key>
           <Property Name="IdPaid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Paid1" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="MealPlan" Relationship="Self.FK__MealPlan__IdPaid__5070F446" FromRole="Paid" ToRole="MealPlan" />
+          <NavigationProperty Name="MealPlan" Relationship="Self.FK__MealPlan__IdPaid__52593CB8" FromRole="Paid" ToRole="MealPlan" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -349,8 +349,8 @@
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdClass" Type="Int32" />
-          <NavigationProperty Name="Class" Relationship="Self.FK__Student__IdClass__534D60F1" FromRole="Student" ToRole="Class" />
-          <NavigationProperty Name="MealPlan" Relationship="Self.FK__MealPlan__IdStud__5165187F" FromRole="Student" ToRole="MealPlan" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Student__IdClass__5535A963" FromRole="Student" ToRole="Class" />
+          <NavigationProperty Name="MealPlan" Relationship="Self.FK__MealPlan__IdStud__534D60F1" FromRole="Student" ToRole="MealPlan" />
         </EntityType>
         <EntityType Name="Teacher">
           <Key>
@@ -359,9 +359,9 @@
           <Property Name="IdTeacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Class" Relationship="Self.FK__Class__IdTeacher__4AB81AF0" FromRole="Teacher" ToRole="Class" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Class__IdTeacher__4CA06362" FromRole="Teacher" ToRole="Class" />
         </EntityType>
-        <Association Name="FK__Class__IdTeacher__4AB81AF0">
+        <Association Name="FK__Class__IdTeacher__4CA06362">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
           <End Role="Class" Type="Self.Class" Multiplicity="*" />
           <ReferentialConstraint>
@@ -373,7 +373,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Student__IdClass__534D60F1">
+        <Association Name="FK__Student__IdClass__5535A963">
           <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
@@ -397,7 +397,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealPlan__IdMeal__4F7CD00D">
+        <Association Name="FK__MealPlan__IdMeal__5165187F">
           <End Role="Meal" Type="Self.Meal" Multiplicity="0..1" />
           <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -409,7 +409,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealPlan__IdPaid__5070F446">
+        <Association Name="FK__MealPlan__IdPaid__52593CB8">
           <End Role="Paid" Type="Self.Paid" Multiplicity="0..1" />
           <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -421,7 +421,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MealPlan__IdStud__5165187F">
+        <Association Name="FK__MealPlan__IdStud__534D60F1">
           <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
           <End Role="MealPlan" Type="Self.MealPlan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -451,11 +451,11 @@
           <EntitySet Name="Paid" EntityType="Self.Paid" />
           <EntitySet Name="Student" EntityType="Self.Student" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" />
-          <AssociationSet Name="FK__Class__IdTeacher__4AB81AF0" Association="Self.FK__Class__IdTeacher__4AB81AF0">
+          <AssociationSet Name="FK__Class__IdTeacher__4CA06362" Association="Self.FK__Class__IdTeacher__4CA06362">
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="Class" EntitySet="Class" />
           </AssociationSet>
-          <AssociationSet Name="FK__Student__IdClass__534D60F1" Association="Self.FK__Student__IdClass__534D60F1">
+          <AssociationSet Name="FK__Student__IdClass__5535A963" Association="Self.FK__Student__IdClass__5535A963">
             <End Role="Class" EntitySet="Class" />
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
@@ -463,15 +463,15 @@
             <End Role="Day" EntitySet="Day" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealPlan__IdMeal__4F7CD00D" Association="Self.FK__MealPlan__IdMeal__4F7CD00D">
+          <AssociationSet Name="FK__MealPlan__IdMeal__5165187F" Association="Self.FK__MealPlan__IdMeal__5165187F">
             <End Role="Meal" EntitySet="Meal" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealPlan__IdPaid__5070F446" Association="Self.FK__MealPlan__IdPaid__5070F446">
+          <AssociationSet Name="FK__MealPlan__IdPaid__52593CB8" Association="Self.FK__MealPlan__IdPaid__52593CB8">
             <End Role="Paid" EntitySet="Paid" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
-          <AssociationSet Name="FK__MealPlan__IdStud__5165187F" Association="Self.FK__MealPlan__IdStud__5165187F">
+          <AssociationSet Name="FK__MealPlan__IdStud__534D60F1" Association="Self.FK__MealPlan__IdStud__534D60F1">
             <End Role="Student" EntitySet="Student" />
             <End Role="MealPlan" EntitySet="MealPlan" />
           </AssociationSet>
